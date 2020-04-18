@@ -9,6 +9,8 @@
 #include "Character/race.hpp"
 #include "Character/background.hpp"
 
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <map>
 #include <vector>
@@ -105,6 +107,10 @@ namespace eztp::character {
         void heal(int heal);
 
         int rollSkill(const std::string &skill);
+
+        void save(const std::string &file);
+
+        void load(const std::string &file);
 
     private:
         ///Mapping the skills to an ability

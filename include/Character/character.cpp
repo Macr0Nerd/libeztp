@@ -270,6 +270,300 @@ int eztp::character::character::rollSkill(const std::string &skill) {
     return d20.roll() + x;
 }
 
+void eztp::character::character::save(const std::string &file) {
+    std::ofstream out;
+    out.open(file);
+
+    if(out.good()) {
+        out << npc << '\n';
+        out << cname << '\n' << cclass << '\n' << crace << '\n' << cbg << '\n' << clevel << '\n';
+
+        out << abilities["STR"][0] << "," << abilities["STR"][1] << '\n';
+        out << abilities["DEX"][0] << "," << abilities["DEX"][1] << '\n';
+        out << abilities["CON"][0] << "," << abilities["CON"][1] << '\n';
+        out << abilities["WIS"][0] << "," << abilities["WIS"][1] << '\n';
+        out << abilities["INT"][0] << "," << abilities["INT"][1] << '\n';
+        out << abilities["CHA"][0] << "," << abilities["CHA"][1] << '\n';
+
+        out << hp << "\n" << maxHP << "\n" << ac << "\n" << gp << "\n" << speed << "\n";
+
+        if (!equipment.empty()) {
+            for (int i = 0; i < equipment.size(); ++i) {
+                out << equipment[i];
+
+                if (i == equipment.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        if (!misc.empty()) {
+            for (int i = 0; i < misc.size(); ++i) {
+                out << misc[i];
+
+                if (i == misc.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        out << proBonus << "\n";
+
+        if (!proficiencies.empty()) {
+            for (int i = 0; i < proficiencies.size(); ++i) {
+                out << proficiencies[i];
+
+                if (i == proficiencies.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        if (!languages.empty()) {
+            for (int i = 0; i < languages.size(); ++i) {
+                out << languages[i];
+
+                if (i == languages.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        if (!saves.empty()) {
+            for (int i = 0; i < saves.size(); ++i) {
+                out << saves[i];
+
+                if (i == saves.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        out << size << "\n";
+
+        if (!vulnerabilities.empty()) {
+            for (int i = 0; i < vulnerabilities.size(); ++i) {
+                out << vulnerabilities[i];
+
+                if (i == vulnerabilities.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        if (!resistances.empty()) {
+            for (int i = 0; i < resistances.size(); ++i) {
+                out << resistances[i];
+
+                if (i == resistances.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        if (!immunities.empty()) {
+            for (int i = 0; i < immunities.size(); ++i) {
+                out << immunities[i];
+
+                if (i == immunities.size() - 1) {
+                    out << "\n";
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        if (!conditions.empty()) {
+            for (int i = 0; i < conditions.size(); ++i) {
+                out << conditions[i];
+
+                if (i == conditions.size() - 1) {
+                    out << std::endl;
+                } else {
+                    out << ",";
+                }
+            }
+        } else {
+            out << "\n";
+        }
+
+        out << uid;
+
+        std::cout << "WRITTEN" << std::endl;
+    } else {
+        std::cerr << "CAN'T WRITE" << std::endl;
+    }
+
+    out.flush();
+    out.close();
+}
+
+void eztp::character::character::load(const std::string &file) {
+    std::ifstream fin;
+    fin.open(file);
+
+    if(fin.good()) {
+        std::string tmp;
+        std::string token;
+        std::string delim = ",";
+        size_t pos = 0;
+
+        getline(fin, tmp);
+        std::stoi(tmp) >> npc;
+        getline(fin, cname);
+        getline(fin, cclass);
+        getline(fin, crace);
+        getline(fin, cbg);
+        getline(fin, tmp);
+        std::stoi(tmp) >> clevel;
+
+        for (auto &i : abilities) {
+            getline(fin, tmp);
+            token = tmp.substr(0, tmp.find(delim));
+            abilities[i.first][0] = std::stoi(token);
+            tmp.erase(0, tmp.find(delim) + delim.length());
+            abilities[i.first][1] = std::stoi(tmp);
+        }
+
+        getline(fin, tmp);
+        std::stoi(tmp) >> hp;
+        getline(fin, tmp);
+        std::stoi(tmp) >> maxHP;
+        getline(fin, tmp);
+        std::stoi(tmp) >> ac;
+        getline(fin, tmp);
+        std::stoi(tmp) >> gp;
+        getline(fin, tmp);
+        std::stoi(tmp) >> speed;
+
+        tmp.clear();
+        equipment.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            equipment.push_back(token);
+            tmp.erase(0, pos + delim.length());
+        }
+
+        tmp.clear();
+        misc.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            misc.push_back(token);
+            tmp.erase(0, pos + delim.length());
+        }
+
+        getline(fin, tmp);
+        std::stoi(tmp) >> proBonus;
+
+        tmp.clear();
+        proficiencies.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            proficiencies.push_back(token);
+            tmp.erase(0, pos + delim.length());
+        }
+
+        tmp.clear();
+        languages.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            languages.push_back(token);
+            tmp.erase(0, pos + delim.length());
+        }
+
+        tmp.clear();
+        saves.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            saves.push_back(token);
+            tmp.erase(0, pos + delim.length());
+        }
+
+        getline(fin, tmp);
+        tmp[0] >> size;
+
+        tmp.clear();
+        vulnerabilities.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            vulnerabilities.push_back(std::stoi(token));
+            tmp.erase(0, pos + delim.length());
+        }
+
+        tmp.clear();
+        resistances.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            resistances.push_back(std::stoi(token));
+            tmp.erase(0, pos + delim.length());
+        }
+
+        tmp.clear();
+        immunities.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            immunities.push_back(std::stoi(token));
+            tmp.erase(0, pos + delim.length());
+        }
+
+        tmp.clear();
+        conditions.clear();
+        getline(fin, tmp);
+        while ((pos = tmp.find(delim)) != std::string::npos) {
+            token = tmp.substr(0, pos);
+            conditions.push_back(token);
+            tmp.erase(0, pos + delim.length());
+        }
+
+        getline(fin, tmp);
+        std::stoi(tmp) >> uid;
+
+        std::cout << "READ" << std::endl;
+    } else {
+        std::cerr << "CAN'T READ" << std::endl;
+    }
+
+    fin.close();
+}
+
 void eztp::character::character::setRace(const std::string &name) {
     /**
              * Sets the race and abilities and stuff
