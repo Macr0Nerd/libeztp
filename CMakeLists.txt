@@ -13,6 +13,7 @@ set(SRC_FILES
         ${SRC_DIR}/Character/weapons.hpp ${SRC_DIR}/Character/weapons.cpp
         ${SRC_DIR}/Character/armor.hpp ${SRC_DIR}/Character/armor.cpp
         ${SRC_DIR}/Character/race.hpp ${SRC_DIR}/Character/race.cpp
-        ${SRC_DIR}/Character/background.hpp ${SRC_DIR}/Character/background.cpp)
+        ${SRC_DIR}/Character/background.hpp ${SRC_DIR}/Character/background.cpp
+        ${SRC_DIR}/Character/character.hpp ${SRC_DIR}/Character/character.cpp)
 
 add_library(eztplib ${SRC_FILES})
