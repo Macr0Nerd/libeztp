@@ -24,9 +24,9 @@ namespace eztp::character {
 
         ~background() = default;
 
-        static void add_bg(const std::string &name, Background &stats);
+        static void addBg(const std::string &name, Background &stats);
 
-        static void del_bg(const std::string &name);
+        static void delBg(const std::string &name);
     };
 }
 

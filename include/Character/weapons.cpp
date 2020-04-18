@@ -55,10 +55,10 @@ weapons::wmap weapons::weaps = {
         {"NET",            {"NET",            d0,  1, 2, 0,  true,  3, {5,   15}}}
 };
 
-void weapons::add_weapon(const std::string &name, Weapons &stats) {
+void weapons::addWeapon(const std::string &name, Weapons &stats) {
     weaps[name] = stats;
 }
 
-void weapons::del_weapon(const std::string &name) {
+void weapons::delWeapon(const std::string &name) {
     weaps.erase(name);
 }

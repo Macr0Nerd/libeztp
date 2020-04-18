@@ -42,6 +42,7 @@ namespace eztp::character {
         std::vector<std::string> proficiencies;
         std::vector<std::string> languages = {"COMMON"};
         std::vector<std::string> saves;
+        std::vector<std::string> conditions;
 
         char size = 'M'; ///Sets the size
 
@@ -75,9 +76,19 @@ namespace eztp::character {
 
         void addTrait(const std::string &name, const std::string &description);
 
+        void delTrait(const std::string &name);
+
         void addProf(const std::string &name);
 
+        void delProf(const std::string &name);
+
         void addItem(const std::string &name);
+
+        void delItem(const std::string &name);
+
+        void addCondition(const std::string &name);
+
+        void delCondition(const std::string &name);
 
         void setWeapon(const std::string &inWeapon);
 

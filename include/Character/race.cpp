@@ -94,10 +94,10 @@ race::rmap race::races = {
                       {}}},
 };
 
-void race::add_race(const std::string &name, Race &stats) {
+void race::addRace(const std::string &name, Race &stats) {
     races[name] = stats;
 }
 
-void race::del_race(const std::string &name) {
+void race::delRace(const std::string &name) {
     races.erase(name);
 }

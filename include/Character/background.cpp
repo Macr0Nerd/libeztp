@@ -7,10 +7,10 @@ background::bmap background::bgs = {
                      {"Holy Symbol", "Prayer Book", "5 sticks of incense", "vestments", "set of common clothes"}}}
 };
 
-void background::add_bg(const std::string &name, Background &stats) {
+void background::addBg(const std::string &name, Background &stats) {
     bgs[name] = stats;
 }
 
-void background::del_bg(const std::string &name) {
+void background::delBg(const std::string &name) {
     bgs.erase(name);
 }

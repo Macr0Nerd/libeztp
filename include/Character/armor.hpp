@@ -28,9 +28,9 @@ namespace eztp::character {
 
         ~armor() = default;
 
-        static void add_armor(const std::string &name, Armor &stats);
+        static void addArmor(const std::string &name, Armor &stats);
 
-        static void del_armor(const std::string &name);
+        static void delArmor(const std::string &name);
     };
 }
 

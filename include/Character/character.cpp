@@ -157,12 +157,32 @@ void eztp::character::character::addTrait(const std::string &name, const std::st
     traits.emplace(name, description);
 }
 
+void eztp::character::character::delTrait(const std::string &name) {
+    traits.erase(name);
+}
+
 void eztp::character::character::addProf(const std::string &name) {
     proficiencies.push_back(name);
 }
 
+void eztp::character::character::delProf(const std::string &name) {
+    proficiencies.erase(remove(proficiencies.begin(), proficiencies.end(), name), proficiencies.end());
+}
+
 void eztp::character::character::addItem(const std::string &name) {
     misc.push_back(name);
+}
+
+void eztp::character::character::delItem(const std::string &name) {
+    misc.erase(remove(misc.begin(), misc.end(), name), misc.end());
+}
+
+void eztp::character::character::addCondition(const std::string &name) {
+    conditions.push_back(name);
+}
+
+void eztp::character::character::delCondition(const std::string &name) {
+    conditions.erase(remove(conditions.begin(), conditions.end(), name), conditions.end());
 }
 
 void eztp::character::character::setWeapon(const std::string &inWeapon) {

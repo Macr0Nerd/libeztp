@@ -30,9 +30,9 @@ namespace eztp::character {
 
         ~race() = default;
 
-        static void add_race(const std::string &name, Race &stats);
+        static void addRace(const std::string &name, Race &stats);
 
-        static void del_race(const std::string &name);
+        static void delRace(const std::string &name);
     };
 }
 

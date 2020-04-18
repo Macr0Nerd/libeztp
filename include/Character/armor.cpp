@@ -18,10 +18,10 @@ armor::amap armor::armors = {
         {"PLATE",           {"PLATE",           18, 0,  'H', true,  10, 5, 15}}
 };
 
-void armor::add_armor(const std::string &name, Armor &stats) {
+void armor::addArmor(const std::string &name, Armor &stats) {
     armors[name] = stats;
 }
 
-void armor::del_armor(const std::string &name) {
+void armor::delArmor(const std::string &name) {
     armors.erase(name);
 }

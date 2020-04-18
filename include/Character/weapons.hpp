@@ -28,9 +28,9 @@ namespace eztp::character {
 
         ~weapons() = default;
 
-        static void add_weapon(const std::string &name, Weapons &stats);
+        static void addWeapon(const std::string &name, Weapons &stats);
 
-        static void del_weapon(const std::string &name);
+        static void delWeapon(const std::string &name);
     };
 }
 
