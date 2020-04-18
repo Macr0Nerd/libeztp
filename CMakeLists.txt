@@ -10,7 +10,7 @@ include_directories(${SRC_DIR})
 
 set(SRC_FILES
         ${SRC_DIR}/eztp.hpp
-        ${SRC_DIR}/Core/dice.hpp
+        ${SRC_DIR}/Core/dice.hpp ${SRC_DIR}/Core/dice.cpp
         ${SRC_DIR}/Character/weapons.hpp ${SRC_DIR}/Character/weapons.cpp
         ${SRC_DIR}/Character/armor.hpp ${SRC_DIR}/Character/armor.cpp
         ${SRC_DIR}/Character/race.hpp ${SRC_DIR}/Character/race.cpp

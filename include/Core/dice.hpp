@@ -10,54 +10,33 @@ namespace eztp {
     namespace core {
         class dice {
         public:
-            dice(int sides = -1) {
-                nums = sides;
-            }
+            explicit dice(int sides = -1);
 
             ~dice() = default;
 
-            int roll() {
-                if (nums > 0) {
-                    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-                    std::default_random_engine generator(seed);
+            [[nodiscard]] int roll() const;
 
-                    std::uniform_int_distribution<int> distribution(1, nums);
+            dice &operator=(const dice &a) = default;
 
-                    return distribution(generator);
-                } else {
-                    return nums;
-                }
-            }
+            bool operator==(const dice &a) const;
 
-            dice &operator=(const dice &a) {
-                nums = a.nums;
-
-                return *this;
-            }
-
-            bool operator==(const dice &a) const {
-                return nums == a.nums;
-            }
-
-            bool operator!=(const dice &a) const {
-                return nums != a.nums;
-            }
+            bool operator!=(const dice &a) const;
 
         private:
             int nums;
         };
     }
 
-    core::dice d0 = core::dice(0);
-    core::dice d1 = core::dice(1);
-    core::dice d2 = core::dice(2);
-    core::dice d4 = core::dice(4);
-    core::dice d6 = core::dice(6);
-    core::dice d8 = core::dice(8);
-    core::dice d10 = core::dice(10);
-    core::dice d12 = core::dice(12);
-    core::dice d20 = core::dice(20);
-    core::dice d100 = core::dice(100);
+    static core::dice d0;
+    static core::dice d1;
+    static core::dice d2;
+    static core::dice d4;
+    static core::dice d6;
+    static core::dice d8;
+    static core::dice d10;
+    static core::dice d12;
+    static core::dice d20;
+    static core::dice d100;
 }
 
 #endif /* EZTPLIB_DICE_HPP */

@@ -25,3 +25,82 @@ void armor::addArmor(const std::string &name, Armor &stats) {
 void armor::delArmor(const std::string &name) {
     armors.erase(name);
 }
+
+void armor::save(const std::string &file) {
+    std::ofstream out;
+    out.open(file);
+
+    if(out.good()){
+        for(auto const &[key, arm] : armors) {
+            out << key << ",";
+            out << arm.name << ",";
+            out << arm.baseAC << ",";
+            out << arm.dexMax << ",";
+            out << arm.armType << ",";
+            out << arm.disadvantage << ",";
+            out << arm.don << ",";
+            out << arm.doff << ",";
+            out << arm.strength << std::endl;
+        }
+
+        out << armors.size();
+        out << "fin";
+
+        std::cout << "WRITTEN" << std::endl;
+    } else {
+        std::cerr << "CAN'T WRITE" << std::endl;
+    }
+
+    out.flush();
+    out.close();
+}
+
+void armor::load(const std::string &file) {
+    std::ifstream fin;
+    fin.open(file);
+
+    if(fin.good()) {
+        std::string tmp;
+        std::string token;
+        std::string delim = ",";
+        size_t pos;
+        std::vector<std::string> mapper;
+
+        armors.clear();
+
+        while (getline(fin, tmp)) {
+            if (tmp.substr(tmp.size()-3, 3) == "fin") {
+                if (armors.size() != std::stoi(tmp.substr(0, tmp.size()-3))) {
+                    std::cerr << "ERROR WHEN READING" << std::endl;
+                    break;
+                } else {
+                    break;
+                }
+            }
+
+            mapper.clear();
+            while ((pos = tmp.find(delim)) != std::string::npos) {
+                token = tmp.substr(0, pos);
+                mapper.push_back(token);
+                tmp.erase(0, pos + delim.size());
+            }
+            mapper.push_back(tmp);
+
+            armors[mapper[0]] = {mapper[1],
+                                 static_cast<unsigned short>(std::stoi(mapper[2])),
+                                 static_cast<unsigned short>(std::stoi(mapper[3])),
+                                 mapper[4][0],
+                                 static_cast<bool>(std::stoi(mapper[5])),
+                                 static_cast<unsigned short>(std::stoi(mapper[6])),
+                                 static_cast<unsigned short>(std::stoi(mapper[7])),
+                                 static_cast<unsigned short>(std::stoi(mapper[8]))
+            };
+
+            tmp.clear();
+        }
+    } else {
+        std::cerr << "CAN'T READ" << std::endl;
+    }
+
+    fin.close();
+}
