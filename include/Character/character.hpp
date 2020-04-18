@@ -133,7 +133,6 @@ namespace eztp::character {
         std::vector<int> vulnerabilities = {0};
         std::vector<int> immunities = {0};
         std::vector<int> resistances = {0};
-        std::vector<std::string> effects;
 
         void setRace(const std::string &name);
 

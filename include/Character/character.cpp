@@ -95,7 +95,7 @@ eztp::character::character &eztp::character::character::operator=(const characte
     vulnerabilities = a.vulnerabilities;
     resistances = a.resistances;
     immunities = a.immunities;
-    effects = a.effects;
+    conditions = a.conditions;
 
     uid = a.uid;
 
