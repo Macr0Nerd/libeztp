@@ -2,7 +2,7 @@
 
 using namespace eztp::character;
 
-weapons::weap weapons::weaps = {
+weapons::wmap weapons::weaps = {
         {"FISTS",          {"FISTS",          d1,  1, 1, 2,  false, 0, {0,   0}}},
         {"CLUB",           {"CLUB",           d4,  1, 1, 2,  false, 0, {0,   0}}},
         {"DAGGER",         {"DAGGER",         d4,  1, 3, 8,  false, 2, {20,  60}}},

@@ -21,8 +21,8 @@ namespace eztp::character {
             unsigned short strength; ///The minimum required strength
         };
 
-        typedef std::map<std::string, Armor> arm;
-        static arm armors;
+        typedef std::map<std::string, Armor> amap;
+        static amap armors;
 
         armor() = default;
 

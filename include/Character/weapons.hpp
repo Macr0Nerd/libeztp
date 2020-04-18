@@ -21,8 +21,8 @@ namespace eztp::character {
             std::pair<int, int> range;
         };
 
-        typedef std::map<std::string, Weapons> weap;
-        static weap weaps;
+        typedef std::map<std::string, Weapons> wmap;
+        static wmap weaps;
 
         weapons() = default;
 
