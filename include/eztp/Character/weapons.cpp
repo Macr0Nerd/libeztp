@@ -62,3 +62,89 @@ void weapons::addWeapon(const std::string &name, Weapons &stats) {
 void weapons::delWeapon(const std::string &name) {
     weaps.erase(name);
 }
+
+void weapons::save(const std::string &file) {
+    std::ofstream out;
+    out.open(file);
+
+    if (out.good()) {
+        for (auto const &[key, wea] : weaps) {
+            out << key << ",";
+            out << wea.name << ",";
+            out << wea.die.nums << ",";
+            out << wea.numberDice << ",";
+            out << wea.ability << ",";
+            out << wea.damageType << ",";
+            out << wea.martial << ",";
+            out << wea.ranged << ",";
+            out << wea.range.first << ",";
+            out << wea.range.second << std::endl;
+        }
+
+        out << weaps.size();
+        out << "fin";
+
+        std::cout << "WRITTEN" << std::endl;
+    } else {
+        std::cerr << "CAN'T WRITE" << std::endl;
+    }
+
+    out.flush();
+    out.close();
+}
+
+void weapons::load(const std::string &file) {
+    std::ifstream fin;
+    fin.open(file);
+
+    if(fin.good()) {
+        std::string tmp;
+        std::string token;
+        std::string delim = ",";
+        size_t pos;
+        std::vector<std::string> mapper;
+
+        weaps.clear();
+
+        while(getline(fin, tmp)) {
+            if (tmp.substr(tmp.size() - 3, 3) == "fin") {
+                if (weaps.size() != std::stoi(tmp.substr(0, tmp.size() - 3))) {
+                    std::cerr << "ERROR WHEN READING" << std::endl;
+                    break;
+                } else {
+                    break;
+                }
+            }
+
+            mapper.clear();
+            while ((pos = tmp.find(delim)) != std::string::npos) {
+                token = tmp.substr(0, pos);
+                mapper.push_back(token);
+                tmp.erase(0, pos + delim.size());
+            }
+            mapper.push_back(tmp);
+
+            weaps[mapper[0]] = {
+                    mapper[1],
+                    eztp::dice[std::stoi(mapper[2])],
+                    static_cast<short>(std::stoi(mapper[3])),
+                    static_cast<short>(std::stoi(mapper[4])),
+                    static_cast<short>(std::stoi(mapper[5])),
+                    static_cast<bool>(std::stoi(mapper[6])),
+                    static_cast<short>(std::stoi(mapper[7])),
+                    {
+                        std::stoi(mapper[8]),
+                        std::stoi(mapper[9])
+                    }
+            };
+
+            tmp.clear();
+        }
+
+        std::cout << "READ" << std::endl;
+    } else {
+        std::cerr << "CAN'T READ" << std::endl;
+    }
+
+    fin.close();
+}

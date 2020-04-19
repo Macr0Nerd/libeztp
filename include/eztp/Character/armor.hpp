@@ -3,8 +3,6 @@
 #ifndef EZTPLIB_ARMOR_HPP
 #define EZTPLIB_ARMOR_HPP
 
-#include "Core/dice.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <string>

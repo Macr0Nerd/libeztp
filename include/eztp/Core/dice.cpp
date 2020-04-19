@@ -27,13 +27,26 @@ bool core::dice::operator!=(const dice &a) const {
     return nums != a.nums;
 }
 
-core::dice d0(0);
-core::dice d1(1);
-core::dice d2(2);
-core::dice d4(4);
-core::dice d6(6);
-core::dice d8(8);
-core::dice d10(10);
-core::dice d12(12);
-core::dice d20(20);
-core::dice d100(100);
+core::dice eztp::d0(0);
+core::dice eztp::d1(1);
+core::dice eztp::d2(2);
+core::dice eztp::d4(4);
+core::dice eztp::d6(6);
+core::dice eztp::d8(8);
+core::dice eztp::d10(10);
+core::dice eztp::d12(12);
+core::dice eztp::d20(20);
+core::dice eztp::d100(100);
+
+dmap dice = {
+        {0, eztp::d0},
+        {1, eztp::d1},
+        {2, eztp::d2},
+        {4, eztp::d4},
+        {6, eztp::d6},
+        {8, eztp::d8},
+        {10, eztp::d10},
+        {12, eztp::d12},
+        {20, eztp::d20},
+        {100, eztp::d100}
+};

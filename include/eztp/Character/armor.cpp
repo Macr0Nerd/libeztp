@@ -30,8 +30,8 @@ void armor::save(const std::string &file) {
     std::ofstream out;
     out.open(file);
 
-    if(out.good()){
-        for(auto const &[key, arm] : armors) {
+    if (out.good()) {
+        for (auto const &[key, arm] : armors) {
             out << key << ",";
             out << arm.name << ",";
             out << arm.baseAC << ",";
@@ -59,7 +59,7 @@ void armor::load(const std::string &file) {
     std::ifstream fin;
     fin.open(file);
 
-    if(fin.good()) {
+    if (fin.good()) {
         std::string tmp;
         std::string token;
         std::string delim = ",";
@@ -69,8 +69,8 @@ void armor::load(const std::string &file) {
         armors.clear();
 
         while (getline(fin, tmp)) {
-            if (tmp.substr(tmp.size()-3, 3) == "fin") {
-                if (armors.size() != std::stoi(tmp.substr(0, tmp.size()-3))) {
+            if (tmp.substr(tmp.size() - 3, 3) == "fin") {
+                if (armors.size() != std::stoi(tmp.substr(0, tmp.size() - 3))) {
                     std::cerr << "ERROR WHEN READING" << std::endl;
                     break;
                 } else {
@@ -98,6 +98,8 @@ void armor::load(const std::string &file) {
 
             tmp.clear();
         }
+
+        std::cout << "READ" << std::endl;
     } else {
         std::cerr << "CAN'T READ" << std::endl;
     }

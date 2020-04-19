@@ -9,12 +9,12 @@ set(SRC_DIR include)
 include_directories(${SRC_DIR})
 
 set(SRC_FILES
-        ${SRC_DIR}/eztp.hpp
-        ${SRC_DIR}/Core/dice.hpp ${SRC_DIR}/Core/dice.cpp
-        ${SRC_DIR}/Character/weapons.hpp ${SRC_DIR}/Character/weapons.cpp
-        ${SRC_DIR}/Character/armor.hpp ${SRC_DIR}/Character/armor.cpp
-        ${SRC_DIR}/Character/race.hpp ${SRC_DIR}/Character/race.cpp
-        ${SRC_DIR}/Character/background.hpp ${SRC_DIR}/Character/background.cpp
-        ${SRC_DIR}/Character/character.hpp ${SRC_DIR}/Character/character.cpp)
+        ${SRC_DIR}/eztp/eztp.hpp
+        ${SRC_DIR}/eztp/Core/dice.hpp ${SRC_DIR}/eztp/Core/dice.cpp
+        ${SRC_DIR}/eztp/Character/weapons.hpp ${SRC_DIR}/eztp/Character/weapons.cpp
+        ${SRC_DIR}/eztp/Character/armor.hpp ${SRC_DIR}/eztp/Character/armor.cpp
+        ${SRC_DIR}/eztp/Character/race.hpp ${SRC_DIR}/eztp/Character/race.cpp
+        ${SRC_DIR}/eztp/Character/background.hpp ${SRC_DIR}/eztp/Character/background.cpp
+        ${SRC_DIR}/eztp/Character/character.hpp ${SRC_DIR}/eztp/Character/character.cpp)
 
 add_library(eztplib ${SRC_FILES})
