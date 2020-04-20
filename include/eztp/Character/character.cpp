@@ -274,7 +274,7 @@ int eztp::character::character::save(const std::string &file) {
     std::ofstream out;
     out.open(file);
 
-    if(out.good()) {
+    if (out.good()) {
         out << npc << '\n';
         out << cname << '\n' << cclass << '\n' << crace << '\n' << cbg << '\n' << clevel << '\n';
 
@@ -437,7 +437,7 @@ int eztp::character::character::load(const std::string &file) {
     std::ifstream fin;
     fin.open(file);
 
-    if(fin.good()) {
+    if (fin.good()) {
         std::string tmp;
         std::string token;
         std::string delim = ",";
