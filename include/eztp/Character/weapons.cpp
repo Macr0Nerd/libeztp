@@ -62,3 +62,101 @@ void weapons::addWeapon(const std::string &name, Weapons &stats) {
 void weapons::delWeapon(const std::string &name) {
     weaps.erase(name);
 }
+
+int weapons::save(const std::string &file) {
+    std::ofstream out;
+    out.open(file);
+
+    if (out.good()) {
+        std::string delim = "$";
+
+        for (auto const &[key, wea] : weaps) {
+            out << key << delim;
+            out << wea.name << delim;
+            out << wea.die.nums << delim;
+            out << wea.numberDice << delim;
+            out << wea.ability << delim;
+            out << wea.damageType << delim;
+            out << wea.martial << delim;
+            out << wea.ranged << delim;
+            out << wea.range.first << delim;
+            out << wea.range.second << std::endl;
+        }
+
+        out << weaps.size();
+        out << "fin";
+
+        out.flush();
+        out.close();
+
+        std::cout << "WRITTEN" << std::endl;
+        return 1;
+    } else {
+        out.flush();
+        out.close();
+
+        std::cerr << "CAN'T WRITE" << std::endl;
+        return 0;
+    }
+}
+
+int weapons::load(const std::string &file) {
+    std::ifstream fin;
+    fin.open(file);
+
+    if (fin.good()) {
+        std::string tmp;
+        std::string token;
+        std::string delim = "$";
+        size_t pos;
+        std::vector<std::string> mapper;
+
+        weaps.clear();
+
+        while (getline(fin, tmp)) {
+            if (tmp.substr(tmp.size() - 3, 3) == "fin") {
+                if (weaps.size() != std::stoi(tmp.substr(0, tmp.size() - 3))) {
+                    fin.close();
+
+                    std::cerr << "ERROR WHEN READING" << std::endl;
+                    return 0;
+                } else {
+                    break;
+                }
+            }
+
+            mapper.clear();
+            while ((pos = tmp.find(delim)) != std::string::npos) {
+                token = tmp.substr(0, pos);
+                mapper.push_back(token);
+                tmp.erase(0, pos + delim.size());
+            }
+            mapper.push_back(tmp);
+
+            weaps[mapper[0]] = {
+                    mapper[1],
+                    eztp::dice[std::stoi(mapper[2])],
+                    static_cast<short>(std::stoi(mapper[3])),
+                    static_cast<short>(std::stoi(mapper[4])),
+                    static_cast<short>(std::stoi(mapper[5])),
+                    static_cast<bool>(std::stoi(mapper[6])),
+                    static_cast<short>(std::stoi(mapper[7])),
+                    {
+                            std::stoi(mapper[8]),
+                            std::stoi(mapper[9])
+                    }
+            };
+
+            tmp.clear();
+        }
+        fin.close();
+
+        std::cout << "READ" << std::endl;
+        return 1;
+    } else {
+        fin.close();
+
+        std::cerr << "CAN'T READ" << std::endl;
+        return 0;
+    }
+}

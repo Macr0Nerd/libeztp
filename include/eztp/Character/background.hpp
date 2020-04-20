@@ -6,11 +6,14 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <fstream>
+#include <iostream>
 
 namespace eztp::character {
     class background {
     public:
         struct Background {
+            std::string name;
             int gp;
 
             std::vector<std::string> prof;
@@ -27,6 +30,10 @@ namespace eztp::character {
         static void addBg(const std::string &name, Background &stats);
 
         static void delBg(const std::string &name);
+
+        static int save(const std::string &file);
+
+        static int load(const std::string &file);
     };
 }
 

@@ -3,12 +3,14 @@
 #ifndef EZTPLIB_CHARACTER_HPP
 #define EZTPLIB_CHARACTER_HPP
 
-#include "Core/dice.hpp"
-#include "Character/armor.hpp"
-#include "Character/weapons.hpp"
-#include "Character/race.hpp"
-#include "Character/background.hpp"
+#include "eztp/Core/dice.hpp"
+#include "eztp/Character/armor.hpp"
+#include "eztp/Character/weapons.hpp"
+#include "eztp/Character/race.hpp"
+#include "eztp/Character/background.hpp"
 
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <map>
 #include <vector>
@@ -105,6 +107,10 @@ namespace eztp::character {
         void heal(int heal);
 
         int rollSkill(const std::string &skill);
+
+        int save(const std::string &file);
+
+        int load(const std::string &file);
 
     private:
         ///Mapping the skills to an ability

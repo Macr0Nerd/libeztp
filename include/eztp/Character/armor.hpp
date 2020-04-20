@@ -3,9 +3,11 @@
 #ifndef EZTPLIB_ARMOR_HPP
 #define EZTPLIB_ARMOR_HPP
 
-#include "Core/dice.hpp"
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <map>
+#include <vector>
 
 namespace eztp::character {
     class armor {
@@ -31,6 +33,10 @@ namespace eztp::character {
         static void addArmor(const std::string &name, Armor &stats);
 
         static void delArmor(const std::string &name);
+
+        static int save(const std::string &file);
+
+        static int load(const std::string &file);
     };
 }
 
