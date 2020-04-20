@@ -6,12 +6,14 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 namespace eztp::character {
     class race {
     public:
         struct Race {
-            std::string Name;
+            std::string name;
             std::vector<std::string> abis; ///Abilities to improve
             std::vector<unsigned short> boosts; ///How much to improve them by
 
@@ -33,6 +35,10 @@ namespace eztp::character {
         static void addRace(const std::string &name, Race &stats);
 
         static void delRace(const std::string &name);
+
+        static int save(const std::string &file);
+
+        static int load(const std::string &file);
     };
 }
 

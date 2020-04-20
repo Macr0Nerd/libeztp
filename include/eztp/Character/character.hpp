@@ -108,9 +108,9 @@ namespace eztp::character {
 
         int rollSkill(const std::string &skill);
 
-        void save(const std::string &file);
+        int save(const std::string &file);
 
-        void load(const std::string &file);
+        int load(const std::string &file);
 
     private:
         ///Mapping the skills to an ability

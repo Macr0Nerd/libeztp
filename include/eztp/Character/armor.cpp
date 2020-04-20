@@ -26,43 +26,50 @@ void armor::delArmor(const std::string &name) {
     armors.erase(name);
 }
 
-void armor::save(const std::string &file) {
+int armor::save(const std::string &file) {
     std::ofstream out;
     out.open(file);
 
     if (out.good()) {
+        std::string delim = "$";
+
         for (auto const &[key, arm] : armors) {
-            out << key << ",";
-            out << arm.name << ",";
-            out << arm.baseAC << ",";
-            out << arm.dexMax << ",";
-            out << arm.armType << ",";
-            out << arm.disadvantage << ",";
-            out << arm.don << ",";
-            out << arm.doff << ",";
+            out << key << delim;
+            out << arm.name << delim;
+            out << arm.baseAC << delim;
+            out << arm.dexMax << delim;
+            out << arm.armType << delim;
+            out << arm.disadvantage << delim;
+            out << arm.don << delim;
+            out << arm.doff << delim;
             out << arm.strength << std::endl;
         }
 
         out << armors.size();
         out << "fin";
 
-        std::cout << "WRITTEN" << std::endl;
-    } else {
-        std::cerr << "CAN'T WRITE" << std::endl;
-    }
+        out.flush();
+        out.close();
 
-    out.flush();
-    out.close();
+        std::cout << "WRITTEN" << std::endl;
+        return 1;
+    } else {
+        out.flush();
+        out.close();
+
+        std::cerr << "CAN'T WRITE" << std::endl;
+        return 0;
+    }
 }
 
-void armor::load(const std::string &file) {
+int armor::load(const std::string &file) {
     std::ifstream fin;
     fin.open(file);
 
     if (fin.good()) {
         std::string tmp;
         std::string token;
-        std::string delim = ",";
+        std::string delim = "$";
         size_t pos;
         std::vector<std::string> mapper;
 
@@ -71,8 +78,10 @@ void armor::load(const std::string &file) {
         while (getline(fin, tmp)) {
             if (tmp.substr(tmp.size() - 3, 3) == "fin") {
                 if (armors.size() != std::stoi(tmp.substr(0, tmp.size() - 3))) {
+                    fin.close();
+
                     std::cerr << "ERROR WHEN READING" << std::endl;
-                    break;
+                    return 0;
                 } else {
                     break;
                 }
@@ -99,10 +108,14 @@ void armor::load(const std::string &file) {
             tmp.clear();
         }
 
-        std::cout << "READ" << std::endl;
-    } else {
-        std::cerr << "CAN'T READ" << std::endl;
-    }
+        fin.close();
 
-    fin.close();
+        std::cout << "READ" << std::endl;
+        return 1;
+    } else {
+        fin.close();
+
+        std::cerr << "CAN'T READ" << std::endl;
+        return 0;
+    }
 }

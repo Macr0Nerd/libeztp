@@ -34,9 +34,9 @@ namespace eztp::character {
 
         static void delWeapon(const std::string &name);
 
-        static void save(const std::string &file);
+        static int save(const std::string &file);
 
-        static void load(const std::string &file);
+        static int load(const std::string &file);
     };
 }
 

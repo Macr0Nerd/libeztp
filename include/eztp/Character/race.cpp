@@ -58,9 +58,9 @@ race::rmap race::races = {
                                 {"ARTIFICIER'S LORE",
                                  "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply."},
                                 {"TINKER",
-                                 "You have proficiency with artisan’s tools (tinker’s tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time. When you create a device, choose one of the following options:\n"
-                                 "Clockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.\n"
-                                 "Fire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.\n"
+                                 "You have proficiency with artisan’s tools (tinker’s tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time. When you create a device, choose one of the following options:"
+                                 "Clockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents."
+                                 "Fire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action."
                                  "Music Box. When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song’s end or when it is closed."}},
                         {"ARTISAN's TOOLS"}}},
 
@@ -100,4 +100,190 @@ void race::addRace(const std::string &name, Race &stats) {
 
 void race::delRace(const std::string &name) {
     races.erase(name);
+}
+
+int race::save(const std::string &file) {
+    std::ofstream out;
+    out.open(file);
+
+    if(out.good()) {
+        std::string delim = "$";
+        std::string delim2 = "|";
+        std::string mapDelim = "#";
+
+        for (auto const &[key, race] : races) {
+            out << key << delim;
+            out << race.name << delim;
+            for (int i = 0; i < race.abis.size(); ++i) {
+                out << race.abis[i];
+
+                if (i != race.abis.size() - 1){
+                    out << delim2;
+                }
+            }
+
+            out << delim;
+
+            for (int j = 0; j < race.boosts.size(); ++j) {
+                out << race.boosts[j];
+
+                if (j != race.boosts.size() - 1) {
+                    out << delim2;
+                }
+            }
+
+            out << delim;
+
+            out << race.size << delim;
+
+            out << race.speed << delim;
+
+            int count = 0;
+            for(auto const &[k, v] : race.traits) {
+                ++count;
+
+                out << k << mapDelim << v;
+
+                if(count != race.traits.size()) {
+                    out << delim2;
+                }
+            }
+
+            out << delim;
+
+            for (int l = 0; l < race.prof.size(); ++l) {
+                out << race.prof[l];
+
+                if(l != race.prof.size() - 1) {
+                    out << delim2;
+                }
+            }
+
+            out << std::endl;
+        }
+
+        out << races.size();
+        out << "fin";
+
+        out.flush();
+        out.close();
+
+        std::cout << "WRITTEN" << std::endl;
+        return 1;
+    } else {
+        out.flush();
+        out.close();
+
+        std::cerr << "CAN'T WRITE" << std::endl;
+        return 0;
+    }
+}
+
+int race::load(const std::string &file) {
+    std::ifstream fin;
+    fin.open(file);
+
+    if(fin.good()) {
+        std::string tmp;
+        std::string token, mToken;
+        std::string delim = "$";
+        std::string delim2 = "|";
+        std::string mapDelim = "#";
+        size_t pos;
+        size_t mPos;
+        std::vector<std::string> mapper;
+
+        std::vector<std::string> a, p;
+        std::vector<unsigned short> b;
+        std::map<std::string, std::string> t;
+
+        races.clear();
+
+        while (getline(fin, tmp)) {
+            if (tmp.substr(tmp.size() - 3, 3) == "fin") {
+                if (races.size() != std::stoi(tmp.substr(0, tmp.size() - 3))) {
+                    fin.close();
+
+                    std::cerr << "ERROR WHEN READING" << std::endl;
+                    return 0;
+                } else {
+                    break;
+                }
+            }
+
+            mapper.clear();
+            while ((pos = tmp.find(delim)) != std::string::npos) {
+                token = tmp.substr(0, pos);
+                mapper.push_back(token);
+                tmp.erase(0, pos + delim.size());
+            }
+            mapper.push_back(tmp);
+
+            a.clear();
+            while ((pos = mapper[2].find(delim2)) != std::string::npos) {
+                token = mapper[2].substr(0, pos);
+                a.push_back(token);
+                mapper[2].erase(0, pos + delim.size());
+            }
+            a.push_back(mapper[1]);
+
+            b.clear();
+            while ((pos = mapper[3].find(delim2)) != std::string::npos) {
+                token = mapper[3].substr(0, pos);
+                b.push_back(static_cast<unsigned short>(std::stoi(token))); //TODO Fix for empty numbers
+                mapper[3].erase(0, pos + delim.size());
+            }
+            b.push_back(static_cast<unsigned short>(std::stoi(mapper[3])));
+
+            t.clear();
+            while ((pos = mapper[6].find((delim2))) != std::string::npos) {
+                token = mapper[6].substr(0, pos);
+
+                while ((mPos = token.find(mapDelim)) != std::string::npos) {
+                    mToken = token.substr(0, mPos);
+                    token.erase(0, mPos + mapDelim.size());
+
+                    t[mToken] = {token};
+                }
+
+                mapper[6].erase(0, pos + delim2.size());
+            }
+
+            while ((pos = mapper[6].find(mapDelim)) != std::string::npos) {
+                token = mapper[6].substr(0, pos);
+                mapper[6].erase(0, pos + mapDelim.size());
+
+                t[token] = {mapper[6]};
+            }
+
+            p.clear();
+            while ((pos = mapper[7].find(delim2)) != std::string::npos) {
+                token = mapper[7].substr(0, pos);
+                p.push_back(token);
+                mapper[7].erase(0, pos + delim.size());
+            }
+            p.push_back(mapper[7]);
+
+            races[mapper[0]] = {
+                    mapper[1],
+                    a,
+                    b,
+                    mapper[4][0],
+                    static_cast<unsigned int>(std::stoi(mapper[5])),
+                    t,
+                    p
+            };
+
+            tmp.clear();
+        }
+        fin.close();
+
+        std::cout << "READ" << std::endl;
+        return 1;
+    } else {
+        fin.close();
+
+        std::cerr << "CAN'T READ" << std::endl;
+        return 0;
+    }
 }

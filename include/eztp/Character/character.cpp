@@ -270,7 +270,7 @@ int eztp::character::character::rollSkill(const std::string &skill) {
     return d20.roll() + x;
 }
 
-void eztp::character::character::save(const std::string &file) {
+int eztp::character::character::save(const std::string &file) {
     std::ofstream out;
     out.open(file);
 
@@ -419,16 +419,21 @@ void eztp::character::character::save(const std::string &file) {
 
         out << uid;
 
-        std::cout << "WRITTEN" << std::endl;
-    } else {
-        std::cerr << "CAN'T WRITE" << std::endl;
-    }
+        out.flush();
+        out.close();
 
-    out.flush();
-    out.close();
+        std::cout << "WRITTEN" << std::endl;
+        return 1;
+    } else {
+        out.flush();
+        out.close();
+
+        std::cerr << "CAN'T WRITE" << std::endl;
+        return 0;
+    }
 }
 
-void eztp::character::character::load(const std::string &file) {
+int eztp::character::character::load(const std::string &file) {
     std::ifstream fin;
     fin.open(file);
 
@@ -556,20 +561,24 @@ void eztp::character::character::load(const std::string &file) {
         getline(fin, tmp);
         std::stoi(tmp) >> uid;
 
-        std::cout << "READ" << std::endl;
-    } else {
-        std::cerr << "CAN'T READ" << std::endl;
-    }
+        fin.close();
 
-    fin.close();
+        std::cout << "READ" << std::endl;
+        return 1;
+    } else {
+        fin.close();
+
+        std::cerr << "CAN'T READ" << std::endl;
+        return 0;
+    }
 }
 
 void eztp::character::character::setRace(const std::string &name) {
     /**
-             * Sets the race and abilities and stuff
-             *
-             * DO NOT RUN AFTER CONSTRUCTION
-             */
+     * Sets the race and abilities and stuff
+     *
+     * DO NOT RUN AFTER CONSTRUCTION
+     */
 
     race::Race x = race::races[name];
 
