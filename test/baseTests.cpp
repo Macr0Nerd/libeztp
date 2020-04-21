@@ -217,3 +217,63 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
     }
 }
 
+TEST_CASE("Weapons data is accessible", "[weapons]") {
+    SECTION("Dice check") {
+        INFO("Dice tests starting");
+        std::cout << "Starting weapons/dice Tests..." << std::endl << std::flush;
+
+        CHECK(eztp::character::weapons::weaps["DAGGER"].die == eztp::d4);
+        CHECK(eztp::character::weapons::weaps["SHORTBOW"].die == eztp::d6);
+        CHECK(eztp::character::weapons::weaps["LONGSWORD+"].die == eztp::d10);
+        CHECK(eztp::character::weapons::weaps["LONGBOW"].die == eztp::d8);
+
+        std::cout << "Passed dice tests" << std::endl << std::flush;
+    }
+
+    SECTION("Ability check") {
+        INFO("Ability tests starting");
+        std::cout << "Starting weapons/ability Tests..." << std::endl << std::flush;
+
+        CHECK(eztp::character::weapons::weaps["DAGGER"].ability == 3);
+        CHECK(eztp::character::weapons::weaps["SHORTBOW"].ability == 2);
+        CHECK(eztp::character::weapons::weaps["LONGSWORD+"].ability == 1);
+        CHECK(eztp::character::weapons::weaps["LONGBOW"].ability == 2);
+
+        std::cout << "Passed ability tests" << std::endl << std::flush;
+    }
+
+    SECTION("Martial Check") {
+        INFO("Martial tests starting");
+        std::cout << "Starting weapons/martial Tests..." << std::endl << std::flush;
+
+        CHECK_FALSE(eztp::character::weapons::weaps["DAGGER"].martial);
+        CHECK_FALSE(eztp::character::weapons::weaps["SHORTBOW"].martial);
+        CHECK(eztp::character::weapons::weaps["LONGSWORD+"].martial);
+        CHECK(eztp::character::weapons::weaps["LONGBOW"].martial);
+
+        std::cout << "Passed martial tests" << std::endl << std::flush;
+    }
+
+    SECTION("Range Check") {
+        INFO("Range tests starting");
+        std::cout << "Starting weapons/range Tests..." << std::endl << std::flush;
+
+        CHECK(eztp::character::weapons::weaps["DAGGER"].ranged == 2);
+        CHECK(eztp::character::weapons::weaps["DAGGER"].range.first == 20);
+        CHECK(eztp::character::weapons::weaps["DAGGER"].range.second == 60);
+
+        CHECK(eztp::character::weapons::weaps["SHORTBOW"].ranged == 1);
+        CHECK(eztp::character::weapons::weaps["SHORTBOW"].range.first == 80);
+        CHECK(eztp::character::weapons::weaps["SHORTBOW"].range.second == 320);
+
+        CHECK(eztp::character::weapons::weaps["GLAIVE"].ranged == 4);
+        CHECK(eztp::character::weapons::weaps["GLAIVE"].range.first == 0);
+        CHECK(eztp::character::weapons::weaps["GLAIVE"].range.second == 0);
+
+        CHECK(eztp::character::weapons::weaps["NET"].ranged == 3);
+        CHECK(eztp::character::weapons::weaps["NET"].range.first == 5);
+        CHECK(eztp::character::weapons::weaps["NET"].range.second == 15);
+
+        std::cout << "Passed range tests" << std::endl << std::flush;
+    }
+}
