@@ -352,3 +352,32 @@ TEST_CASE("Race data is accessible", "[races") {
         std::cout << "Passed speed tests" << std::endl;
     }
 }
+
+TEST_CASE("Background data is accessible", "[background]") {
+    SECTION("gp") {
+        INFO("gp Tests");
+        std::cout << "Starting gp Tests..." << std::endl;
+
+        CHECK(eztp::character::background::bgs["ACOLYTE"].gp == 15);
+
+        std::cout << "Passed gp tests" << std::endl;
+    }
+
+    SECTION("Proficiencies") {
+        INFO("Proficiencies Tests");
+        std::cout << "Starting proficiencies Tests..." << std::endl;
+
+        CHECK(eztp::character::background::bgs["ACOLYTE"].prof[1] == "RELIGION");
+
+        std::cout << "Passed proficiencies tests" << std::endl;
+    }
+
+    SECTION("Equipment") {
+        INFO("Equipment Tests");
+        std::cout << "Starting equipment Tests..." << std::endl;
+
+        CHECK(eztp::character::background::bgs["ACOLYTE"].equip[0] == "Holy Symbol");
+
+        std::cout << "Passed equipment tests" << std::endl;
+    }
+}
