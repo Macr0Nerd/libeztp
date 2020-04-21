@@ -277,3 +277,39 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         std::cout << "Passed range tests" << std::endl << std::flush;
     }
 }
+
+TEST_CASE("Armor data is accessible", "[armor]") {
+    SECTION("Base AC") {
+        INFO("Base AC Tests");
+        std::cout << "Starting armor/ac Tests..." << std::endl << std::flush;
+
+        CHECK(eztp::character::armor::armors["LEATHER"].baseAC == 11);
+        CHECK(eztp::character::armor::armors["BREASTPLATE"].baseAC == 14);
+        CHECK(eztp::character::armor::armors["PLATE"].baseAC == 18);
+
+        std::cout << "Passed base AC" << std::endl << std::flush;
+    }
+
+    SECTION("Armor type") {
+        INFO("Armor Type Tests");
+        std::cout << "Starting armor/type Tests..." << std::endl << std::flush;
+
+        CHECK(eztp::character::armor::armors["LEATHER"].armType == 'L');
+        CHECK(eztp::character::armor::armors["BREASTPLATE"].armType == 'M');
+        CHECK(eztp::character::armor::armors["PLATE"].armType == 'H');
+
+        std::cout << "Passed armor type" << std::endl << std::flush;
+    }
+
+    SECTION("Stealth") {
+        INFO("Stealth Tests");
+        std::cout << "Starting armor/stealth Tests..." << std::endl << std::flush;
+
+        CHECK_FALSE(eztp::character::armor::armors["LEATHER"].disadvantage);
+        CHECK_FALSE(eztp::character::armor::armors["BREASTPLATE"].disadvantage);
+        CHECK(eztp::character::armor::armors["PLATE"].disadvantage);
+
+        std::cout << "Passes stealth tests" << std::endl << std::flush;
+    }
+}
+
