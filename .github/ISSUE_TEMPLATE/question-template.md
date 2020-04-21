@@ -2,8 +2,8 @@
 name: Question template
 about: Used to ask a question
 title: "[ASK] Concise description here"
-labels: needs triage, question, triage approved
-assignees: Macr0Nerd
+labels: question
+assignees: ''
 
 ---
 
