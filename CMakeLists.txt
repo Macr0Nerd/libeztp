@@ -1,13 +1,19 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project(eztplib CXX)
 
+#All the basic requirements and shizz
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CSS_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+#Necessary directories to function
+set(LIB_DIR lib)
+include_directories(${LIB_DIR})
+
 set(SRC_DIR include)
 include_directories(${SRC_DIR})
 
+#Main library files
 set(SRC_FILES
         ${SRC_DIR}/eztp/eztp.hpp
         ${SRC_DIR}/eztp/Core/dice.hpp ${SRC_DIR}/eztp/Core/dice.cpp
@@ -17,4 +23,11 @@ set(SRC_FILES
         ${SRC_DIR}/eztp/Character/background.hpp ${SRC_DIR}/eztp/Character/background.cpp
         ${SRC_DIR}/eztp/Character/character.hpp ${SRC_DIR}/eztp/Character/character.cpp)
 
-add_library(eztplib ${SRC_FILES})
+add_library(${PROJECT_NAME} ${SRC_FILES})
+
+set(TST_DIR test)
+set(TST_FILES
+        ${TST_DIR}/baseTests.cpp)
+
+add_executable(${PROJECT_NAME}_test ${TST_FILES})
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})
