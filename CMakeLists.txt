@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-project(eztplib CXX)
+project(eztp CXX)
 
 #All the basic requirements and shizz
 set(CMAKE_CXX_STANDARD 17)
@@ -15,13 +15,13 @@ include_directories(${SRC_DIR})
 
 #Main library files
 set(SRC_FILES
-        ${SRC_DIR}/eztp/eztp.hpp
-        ${SRC_DIR}/eztp/Core/dice.hpp ${SRC_DIR}/eztp/Core/dice.cpp
-        ${SRC_DIR}/eztp/Character/weapons.hpp ${SRC_DIR}/eztp/Character/weapons.cpp
-        ${SRC_DIR}/eztp/Character/armor.hpp ${SRC_DIR}/eztp/Character/armor.cpp
-        ${SRC_DIR}/eztp/Character/race.hpp ${SRC_DIR}/eztp/Character/race.cpp
-        ${SRC_DIR}/eztp/Character/background.hpp ${SRC_DIR}/eztp/Character/background.cpp
-        ${SRC_DIR}/eztp/Character/character.hpp ${SRC_DIR}/eztp/Character/character.cpp)
+	${SRC_DIR}/eztp.hpp
+        ${SRC_DIR}/eztp/dice.hpp ${SRC_DIR}/eztp/dice.cpp
+        ${SRC_DIR}/eztp/weapons.hpp ${SRC_DIR}/eztp/weapons.cpp
+        ${SRC_DIR}/eztp/armor.hpp ${SRC_DIR}/eztp/armor.cpp
+        ${SRC_DIR}/eztp/race.hpp ${SRC_DIR}/eztp/race.cpp
+        ${SRC_DIR}/eztp/background.hpp ${SRC_DIR}/eztp/background.cpp
+        ${SRC_DIR}/eztp/character.hpp ${SRC_DIR}/eztp/character.cpp)
 
 add_library(${PROJECT_NAME} ${SRC_FILES})
 

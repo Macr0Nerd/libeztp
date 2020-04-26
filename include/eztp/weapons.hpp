@@ -3,7 +3,7 @@
 #ifndef EZTPLIB_WEAPONS_HPP
 #define EZTPLIB_WEAPONS_HPP
 
-#include "eztp/Core/dice.hpp"
+#include "dice.hpp"
 #include <string>
 #include <map>
 #include <iostream>

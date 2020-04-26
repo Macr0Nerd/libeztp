@@ -3,11 +3,11 @@
 #ifndef EZTPLIB_CHARACTER_HPP
 #define EZTPLIB_CHARACTER_HPP
 
-#include "eztp/Core/dice.hpp"
-#include "eztp/Character/armor.hpp"
-#include "eztp/Character/weapons.hpp"
-#include "eztp/Character/race.hpp"
-#include "eztp/Character/background.hpp"
+#include "dice.hpp"
+#include "armor.hpp"
+#include "weapons.hpp"
+#include "race.hpp"
+#include "background.hpp"
 
 #include <iostream>
 #include <fstream>

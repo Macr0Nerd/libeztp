@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "eztp/eztp.hpp"
-#include "Catch2/catch.hpp"
+#include "eztp.hpp"
+#include "catch.hpp"
 
 TEST_CASE("Dice can roll within a range", "[dice]") {
     SECTION("Default Dice") {
