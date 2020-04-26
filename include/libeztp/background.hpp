@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTP_BACKGROUND_HPP
-#define EZTP_BACKGROUND_HPP
+#ifndef LIBEZTP_BACKGROUND_HPP
+#define LIBEZTP_BACKGROUND_HPP
 
 #include <string>
 #include <map>
@@ -9,7 +9,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace eztp::character {
+namespace eztp {
     class background {
     public:
         struct Background {
@@ -38,4 +38,4 @@ namespace eztp::character {
 }
 
 
-#endif //EZTP_BACKGROUND_HPP
+#endif //LIBEZTP_BACKGROUND_HPP

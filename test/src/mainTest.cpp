@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "eztp.hpp"
-#include "catch.hpp"
+#include "libeztp/libeztp.hpp"
+#include "Catch2/catch.hpp"
 
 TEST_CASE("Dice can roll within a range", "[dice]") {
     SECTION("Default Dice") {
@@ -169,7 +169,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
     }
 
     SECTION("Custom dice") {
-        eztp::core::dice die = eztp::core::dice();
+        eztp::dice die = eztp::dice();
 
         SECTION("Default Case") {
             INFO("Default Test Start");
@@ -186,7 +186,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             INFO("Custom Case Start");
             std::cout << "Starting custom case Tests..." << std::endl;
 
-            die = eztp::core::dice(50);
+            die = eztp::dice(50);
 
             for (int i = 0; i < 5; ++i) {
                 DYNAMIC_SECTION("Custom Test " << i) {
@@ -203,7 +203,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
         }
 
         SECTION("Non-Natural Case") {
-            die = eztp::core::dice(-10);
+            die = eztp::dice(-10);
 
             INFO("Non-natural Test Start");
             std::cout << "Starting non-natural case Tests..." << std::endl;
@@ -222,10 +222,10 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Dice tests starting");
         std::cout << "Starting weapons/dice Tests..." << std::endl;
 
-        CHECK(eztp::character::weapons::weaps["DAGGER"].die == eztp::d4);
-        CHECK(eztp::character::weapons::weaps["SHORTBOW"].die == eztp::d6);
-        CHECK(eztp::character::weapons::weaps["LONGSWORD+"].die == eztp::d10);
-        CHECK(eztp::character::weapons::weaps["LONGBOW"].die == eztp::d8);
+        CHECK(eztp::weapons::weaps["DAGGER"].die == eztp::d4);
+        CHECK(eztp::weapons::weaps["SHORTBOW"].die == eztp::d6);
+        CHECK(eztp::weapons::weaps["LONGSWORD+"].die == eztp::d10);
+        CHECK(eztp::weapons::weaps["LONGBOW"].die == eztp::d8);
 
         std::cout << "Passed dice tests" << std::endl;
     }
@@ -234,10 +234,10 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Ability tests starting");
         std::cout << "Starting weapons/ability Tests..." << std::endl;
 
-        CHECK(eztp::character::weapons::weaps["DAGGER"].ability == 3);
-        CHECK(eztp::character::weapons::weaps["SHORTBOW"].ability == 2);
-        CHECK(eztp::character::weapons::weaps["LONGSWORD+"].ability == 1);
-        CHECK(eztp::character::weapons::weaps["LONGBOW"].ability == 2);
+        CHECK(eztp::weapons::weaps["DAGGER"].ability == 3);
+        CHECK(eztp::weapons::weaps["SHORTBOW"].ability == 2);
+        CHECK(eztp::weapons::weaps["LONGSWORD+"].ability == 1);
+        CHECK(eztp::weapons::weaps["LONGBOW"].ability == 2);
 
         std::cout << "Passed ability tests" << std::endl;
     }
@@ -246,10 +246,10 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Martial tests starting");
         std::cout << "Starting weapons/martial Tests..." << std::endl;
 
-        CHECK_FALSE(eztp::character::weapons::weaps["DAGGER"].martial);
-        CHECK_FALSE(eztp::character::weapons::weaps["SHORTBOW"].martial);
-        CHECK(eztp::character::weapons::weaps["LONGSWORD+"].martial);
-        CHECK(eztp::character::weapons::weaps["LONGBOW"].martial);
+        CHECK_FALSE(eztp::weapons::weaps["DAGGER"].martial);
+        CHECK_FALSE(eztp::weapons::weaps["SHORTBOW"].martial);
+        CHECK(eztp::weapons::weaps["LONGSWORD+"].martial);
+        CHECK(eztp::weapons::weaps["LONGBOW"].martial);
 
         std::cout << "Passed martial tests" << std::endl;
     }
@@ -258,21 +258,21 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Range tests starting");
         std::cout << "Starting weapons/range Tests..." << std::endl;
 
-        CHECK(eztp::character::weapons::weaps["DAGGER"].ranged == 2);
-        CHECK(eztp::character::weapons::weaps["DAGGER"].range.first == 20);
-        CHECK(eztp::character::weapons::weaps["DAGGER"].range.second == 60);
+        CHECK(eztp::weapons::weaps["DAGGER"].ranged == 2);
+        CHECK(eztp::weapons::weaps["DAGGER"].range.first == 20);
+        CHECK(eztp::weapons::weaps["DAGGER"].range.second == 60);
 
-        CHECK(eztp::character::weapons::weaps["SHORTBOW"].ranged == 1);
-        CHECK(eztp::character::weapons::weaps["SHORTBOW"].range.first == 80);
-        CHECK(eztp::character::weapons::weaps["SHORTBOW"].range.second == 320);
+        CHECK(eztp::weapons::weaps["SHORTBOW"].ranged == 1);
+        CHECK(eztp::weapons::weaps["SHORTBOW"].range.first == 80);
+        CHECK(eztp::weapons::weaps["SHORTBOW"].range.second == 320);
 
-        CHECK(eztp::character::weapons::weaps["GLAIVE"].ranged == 4);
-        CHECK(eztp::character::weapons::weaps["GLAIVE"].range.first == 0);
-        CHECK(eztp::character::weapons::weaps["GLAIVE"].range.second == 0);
+        CHECK(eztp::weapons::weaps["GLAIVE"].ranged == 4);
+        CHECK(eztp::weapons::weaps["GLAIVE"].range.first == 0);
+        CHECK(eztp::weapons::weaps["GLAIVE"].range.second == 0);
 
-        CHECK(eztp::character::weapons::weaps["NET"].ranged == 3);
-        CHECK(eztp::character::weapons::weaps["NET"].range.first == 5);
-        CHECK(eztp::character::weapons::weaps["NET"].range.second == 15);
+        CHECK(eztp::weapons::weaps["NET"].ranged == 3);
+        CHECK(eztp::weapons::weaps["NET"].range.first == 5);
+        CHECK(eztp::weapons::weaps["NET"].range.second == 15);
 
         std::cout << "Passed range tests" << std::endl;
     }
@@ -283,9 +283,9 @@ TEST_CASE("Armor data is accessible", "[armor]") {
         INFO("Base AC Tests");
         std::cout << "Starting armor/ac Tests..." << std::endl;
 
-        CHECK(eztp::character::armor::armors["LEATHER"].baseAC == 11);
-        CHECK(eztp::character::armor::armors["BREASTPLATE"].baseAC == 14);
-        CHECK(eztp::character::armor::armors["PLATE"].baseAC == 18);
+        CHECK(eztp::armor::armors["LEATHER"].baseAC == 11);
+        CHECK(eztp::armor::armors["BREASTPLATE"].baseAC == 14);
+        CHECK(eztp::armor::armors["PLATE"].baseAC == 18);
 
         std::cout << "Passed base AC" << std::endl;
     }
@@ -294,9 +294,9 @@ TEST_CASE("Armor data is accessible", "[armor]") {
         INFO("Armor Type Tests");
         std::cout << "Starting armor/type Tests..." << std::endl;
 
-        CHECK(eztp::character::armor::armors["LEATHER"].armType == 'L');
-        CHECK(eztp::character::armor::armors["BREASTPLATE"].armType == 'M');
-        CHECK(eztp::character::armor::armors["PLATE"].armType == 'H');
+        CHECK(eztp::armor::armors["LEATHER"].armType == 'L');
+        CHECK(eztp::armor::armors["BREASTPLATE"].armType == 'M');
+        CHECK(eztp::armor::armors["PLATE"].armType == 'H');
 
         std::cout << "Passed armor type" << std::endl;
     }
@@ -305,9 +305,9 @@ TEST_CASE("Armor data is accessible", "[armor]") {
         INFO("Stealth Tests");
         std::cout << "Starting armor/stealth Tests..." << std::endl;
 
-        CHECK_FALSE(eztp::character::armor::armors["LEATHER"].disadvantage);
-        CHECK_FALSE(eztp::character::armor::armors["BREASTPLATE"].disadvantage);
-        CHECK(eztp::character::armor::armors["PLATE"].disadvantage);
+        CHECK_FALSE(eztp::armor::armors["LEATHER"].disadvantage);
+        CHECK_FALSE(eztp::armor::armors["BREASTPLATE"].disadvantage);
+        CHECK(eztp::armor::armors["PLATE"].disadvantage);
 
         std::cout << "Passes stealth tests" << std::endl;
     }
@@ -318,14 +318,14 @@ TEST_CASE("Race data is accessible", "[races") {
         INFO("Abilities/Boosts Tests");
         std::cout << "Starting abilities/boosts Tests..." << std::endl;
 
-        CHECK(eztp::character::race::races["HILL DWARF"].abis[1] == "WIS");
-        CHECK(eztp::character::race::races["HILL DWARF"].boosts[1] == 1);
+        CHECK(eztp::race::races["HILL DWARF"].abis[1] == "WIS");
+        CHECK(eztp::race::races["HILL DWARF"].boosts[1] == 1);
 
-        CHECK(eztp::character::race::races["HIGH ELF"].abis[0] == "DEX");
-        CHECK(eztp::character::race::races["HIGH ELF"].boosts[0] == 2);
+        CHECK(eztp::race::races["HIGH ELF"].abis[0] == "DEX");
+        CHECK(eztp::race::races["HIGH ELF"].boosts[0] == 2);
 
-        CHECK(eztp::character::race::races["TIEFLING"].abis[1] == "CHA");
-        CHECK(eztp::character::race::races["TIEFLING"].boosts[1] == 2);
+        CHECK(eztp::race::races["TIEFLING"].abis[1] == "CHA");
+        CHECK(eztp::race::races["TIEFLING"].boosts[1] == 2);
 
         std::cout << "Passed abilities/boosts tests" << std::endl;
     }
@@ -334,9 +334,9 @@ TEST_CASE("Race data is accessible", "[races") {
         INFO("Size Tests");
         std::cout << "Starting size Tests..." << std::endl;
 
-        CHECK(eztp::character::race::races["HALF-ORC"].size == 'M');
-        CHECK(eztp::character::race::races["LIGHTFOOT HALFLING"].size == 'S');
-        CHECK(eztp::character::race::races["HUMAN"].size == 'M');
+        CHECK(eztp::race::races["HALF-ORC"].size == 'M');
+        CHECK(eztp::race::races["LIGHTFOOT HALFLING"].size == 'S');
+        CHECK(eztp::race::races["HUMAN"].size == 'M');
 
         std::cout << "Passed size tests" << std::endl;
     }
@@ -345,9 +345,9 @@ TEST_CASE("Race data is accessible", "[races") {
         INFO("Speed Tests");
         std::cout << "Starting speed Tests..." << std::endl;
 
-        CHECK(eztp::character::race::races["HALF-ELF"].speed == 30);
-        CHECK(eztp::character::race::races["HILL DWARF"].speed == 25);
-        CHECK(eztp::character::race::races["HUMAN"].speed == 30);
+        CHECK(eztp::race::races["HALF-ELF"].speed == 30);
+        CHECK(eztp::race::races["HILL DWARF"].speed == 25);
+        CHECK(eztp::race::races["HUMAN"].speed == 30);
 
         std::cout << "Passed speed tests" << std::endl;
     }
@@ -358,7 +358,7 @@ TEST_CASE("Background data is accessible", "[background]") {
         INFO("gp Tests");
         std::cout << "Starting gp Tests..." << std::endl;
 
-        CHECK(eztp::character::background::bgs["ACOLYTE"].gp == 15);
+        CHECK(eztp::background::bgs["ACOLYTE"].gp == 15);
 
         std::cout << "Passed gp tests" << std::endl;
     }
@@ -367,7 +367,7 @@ TEST_CASE("Background data is accessible", "[background]") {
         INFO("Proficiencies Tests");
         std::cout << "Starting proficiencies Tests..." << std::endl;
 
-        CHECK(eztp::character::background::bgs["ACOLYTE"].prof[1] == "RELIGION");
+        CHECK(eztp::background::bgs["ACOLYTE"].prof[1] == "RELIGION");
 
         std::cout << "Passed proficiencies tests" << std::endl;
     }
@@ -376,7 +376,7 @@ TEST_CASE("Background data is accessible", "[background]") {
         INFO("Equipment Tests");
         std::cout << "Starting equipment Tests..." << std::endl;
 
-        CHECK(eztp::character::background::bgs["ACOLYTE"].equip[0] == "Holy Symbol");
+        CHECK(eztp::background::bgs["ACOLYTE"].equip[0] == "Holy Symbol");
 
         std::cout << "Passed equipment tests" << std::endl;
     }

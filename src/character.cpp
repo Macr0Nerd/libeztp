@@ -1,6 +1,23 @@
-#include "character.hpp"
+/*
+ *  Copyright (C) 2020  Gabriele A. Ron
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
-eztp::character::character::character(const std::string &initname, const std::string &initclass,
+#include "libeztp/character.hpp"
+
+eztp::character::character(const std::string &initname, const std::string &initclass,
                                       const std::string &initrace,
                                       const std::string &initbg, int level, int strength, int dexterity,
                                       int constitution,
@@ -49,15 +66,15 @@ eztp::character::character::character(const std::string &initname, const std::st
     }
 }
 
-bool eztp::character::character::operator==(const character &a) const {
+bool eztp::character::operator==(const character &a) const {
     return uid == a.uid;
 }
 
-bool eztp::character::character::operator==(const character &a) {
+bool eztp::character::operator==(const character &a) {
     return uid == a.uid;
 }
 
-eztp::character::character &eztp::character::character::operator=(const character &a) {
+eztp::character &eztp::character::operator=(const character &a) {
     /**
      * Overriding the assignment operator to copy characters completely
      *
@@ -102,7 +119,7 @@ eztp::character::character &eztp::character::character::operator=(const characte
     return *this;
 }
 
-eztp::character::character &eztp::character::character::operator>>(const character &a) {
+eztp::character &eztp::character::operator>>(const character &a) {
     /**
      * Overriding the right shift operator to soft copy characters
      *
@@ -121,7 +138,7 @@ eztp::character::character &eztp::character::character::operator>>(const charact
     return *this;
 }
 
-void eztp::character::character::refreshMods() {
+void eztp::character::refreshMods() {
     /**
      * Refresh the ability modifiers
      */
@@ -131,7 +148,7 @@ void eztp::character::character::refreshMods() {
     }
 }
 
-void eztp::character::character::refreshAC() {
+void eztp::character::refreshAC() {
     /**
      * Refreshes the ac
      *
@@ -153,49 +170,49 @@ void eztp::character::character::refreshAC() {
     }
 }
 
-void eztp::character::character::addTrait(const std::string &name, const std::string &description) {
+void eztp::character::addTrait(const std::string &name, const std::string &description) {
     traits.emplace(name, description);
 }
 
-void eztp::character::character::delTrait(const std::string &name) {
+void eztp::character::delTrait(const std::string &name) {
     traits.erase(name);
 }
 
-void eztp::character::character::addProf(const std::string &name) {
+void eztp::character::addProf(const std::string &name) {
     proficiencies.push_back(name);
 }
 
-void eztp::character::character::delProf(const std::string &name) {
+void eztp::character::delProf(const std::string &name) {
     proficiencies.erase(remove(proficiencies.begin(), proficiencies.end(), name), proficiencies.end());
 }
 
-void eztp::character::character::addItem(const std::string &name) {
+void eztp::character::addItem(const std::string &name) {
     misc.push_back(name);
 }
 
-void eztp::character::character::delItem(const std::string &name) {
+void eztp::character::delItem(const std::string &name) {
     misc.erase(remove(misc.begin(), misc.end(), name), misc.end());
 }
 
-void eztp::character::character::addCondition(const std::string &name) {
+void eztp::character::addCondition(const std::string &name) {
     conditions.push_back(name);
 }
 
-void eztp::character::character::delCondition(const std::string &name) {
+void eztp::character::delCondition(const std::string &name) {
     conditions.erase(remove(conditions.begin(), conditions.end(), name), conditions.end());
 }
 
-void eztp::character::character::setWeapon(const std::string &inWeapon) {
+void eztp::character::setWeapon(const std::string &inWeapon) {
     equipment[0] = inWeapon;
 }
 
-void eztp::character::character::setArmor(const std::string &inArmor) {
+void eztp::character::setArmor(const std::string &inArmor) {
     refreshAC();
 
     equipment[1] = inArmor;
 }
 
-std::string eztp::character::character::getWeapon() {
+std::string eztp::character::getWeapon() {
     /**
      * Gets the weapon name
      *
@@ -205,7 +222,7 @@ std::string eztp::character::character::getWeapon() {
     return equipment[0];
 }
 
-std::string eztp::character::character::getArmor() {
+std::string eztp::character::getArmor() {
     /**
      * Gets the armor name
      *
@@ -215,7 +232,7 @@ std::string eztp::character::character::getArmor() {
     return equipment[1];
 }
 
-int eztp::character::character::attack(bool mod) {
+int eztp::character::attack(bool mod) {
     /**
      * Used to get the damage from a weapon attack
      *
@@ -244,15 +261,15 @@ int eztp::character::character::attack(bool mod) {
     return dmg;
 }
 
-void eztp::character::character::damage(int dmg) {
+void eztp::character::damage(int dmg) {
     hp -= dmg;
 }
 
-void eztp::character::character::heal(int heal) {
+void eztp::character::heal(int heal) {
     hp += heal;
 }
 
-int eztp::character::character::rollSkill(const std::string &skill) {
+int eztp::character::rollSkill(const std::string &skill) {
     /**
      * Returns a random dice roll for the provided skill
      *
@@ -270,7 +287,7 @@ int eztp::character::character::rollSkill(const std::string &skill) {
     return d20.roll() + x;
 }
 
-int eztp::character::character::save(const std::string &file) {
+int eztp::character::save(const std::string &file) {
     std::ofstream out;
     out.open(file);
 
@@ -433,7 +450,7 @@ int eztp::character::character::save(const std::string &file) {
     }
 }
 
-int eztp::character::character::load(const std::string &file) {
+int eztp::character::load(const std::string &file) {
     std::ifstream fin;
     fin.open(file);
 
@@ -573,7 +590,7 @@ int eztp::character::character::load(const std::string &file) {
     }
 }
 
-void eztp::character::character::setRace(const std::string &name) {
+void eztp::character::setRace(const std::string &name) {
     /**
      * Sets the race and abilities and stuff
      *
@@ -599,7 +616,7 @@ void eztp::character::character::setRace(const std::string &name) {
     proficiencies.insert(proficiencies.end(), x.prof.begin(), x.prof.end());
 }
 
-void eztp::character::character::setBG(const std::string &name) {
+void eztp::character::setBG(const std::string &name) {
     background::Background x = background::bgs[name];
 
     gp = x.gp;

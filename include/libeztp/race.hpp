@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTP_RACE_HPP
-#define EZTP_RACE_HPP
+#ifndef LIBEZTP_RACE_HPP
+#define LIBEZTP_RACE_HPP
 
 #include <string>
 #include <map>
@@ -9,7 +9,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace eztp::character {
+namespace eztp {
     class race {
     public:
         struct Race {
@@ -43,4 +43,4 @@ namespace eztp::character {
 }
 
 
-#endif //EZTP_RACE_HPP
+#endif //LIBEZTP_RACE_HPP

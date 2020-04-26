@@ -1,33 +1,29 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-project(eztp CXX)
+project(eztp VERSION 1.3.1 LANGUAGES CXX)
 
-#All the basic requirements and shizz
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17) #I'll use target_compile_options when I'm not running on 0 hours of sleep
 set(CMAKE_CSS_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-#Necessary directories to function
-set(LIB_DIR lib)
-include_directories(${LIB_DIR})
+add_library(libeztp SHARED src/libeztp.cpp)
 
-set(SRC_DIR include)
-include_directories(${SRC_DIR})
+target_include_directories(libeztp
+        PUBLIC
+            $<INSTALL_INTERFACE:include/>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
 
-#Main library files
-set(SRC_FILES
-	${SRC_DIR}/eztp.hpp ${SRC_DIR}/eztp.cpp
-        ${SRC_DIR}/eztp/dice.hpp ${SRC_DIR}/eztp/dice.cpp
-        ${SRC_DIR}/eztp/weapons.hpp ${SRC_DIR}/eztp/weapons.cpp
-        ${SRC_DIR}/eztp/armor.hpp ${SRC_DIR}/eztp/armor.cpp
-        ${SRC_DIR}/eztp/race.hpp ${SRC_DIR}/eztp/race.cpp
-        ${SRC_DIR}/eztp/background.hpp ${SRC_DIR}/eztp/background.cpp
-        ${SRC_DIR}/eztp/character.hpp ${SRC_DIR}/eztp/character.cpp)
+target_sources(libeztp
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/armor.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/background.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/character.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dice.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/race.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/weapons.cpp
+)
 
-add_library(${PROJECT_NAME} ${SRC_FILES})
+SET_TARGET_PROPERTIES(libeztp PROPERTIES PREFIX "")
 
-set(TST_DIR test)
-set(TST_FILES
-        ${TST_DIR}/baseTests.cpp)
-
-add_executable(${PROJECT_NAME}_test ${TST_FILES})
-target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})
+add_subdirectory(test)
+target_include_directories(test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/ext)

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTP_ARMOR_HPP
-#define EZTP_ARMOR_HPP
+#ifndef LIBEZTP_ARMOR_HPP
+#define LIBEZTP_ARMOR_HPP
 
 #include <iostream>
 #include <fstream>
@@ -9,7 +9,7 @@
 #include <map>
 #include <vector>
 
-namespace eztp::character {
+namespace eztp {
     class armor {
     public:
         struct Armor {
@@ -40,4 +40,4 @@ namespace eztp::character {
     };
 }
 
-#endif //EZTP_ARMOR_HPP
+#endif //LIBEZTP_ARMOR_HPP

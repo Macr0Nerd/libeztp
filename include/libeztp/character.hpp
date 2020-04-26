@@ -1,13 +1,13 @@
 #pragma once
 
-#ifndef EZTP_CHARACTER_HPP
-#define EZTP_CHARACTER_HPP
+#ifndef LIBEZTP_CHARACTER_HPP
+#define LIBEZTP_CHARACTER_HPP
 
 #include "dice.hpp"
-#include "armor.hpp"
+#include "libeztp/armor.hpp"
 #include "weapons.hpp"
 #include "race.hpp"
-#include "background.hpp"
+#include "libeztp/background.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -19,7 +19,7 @@
 #include <cmath>
 #include <algorithm>
 
-namespace eztp::character {
+namespace eztp {
     class character {
     public:
         ///Used to keep track of characters; 0 is for placeholder, 1-1000 is for NPCs, 1001+ is for PCs
@@ -147,4 +147,4 @@ namespace eztp::character {
 }
 
 
-#endif //EZTP_CHARACTER_HPP
+#endif //LIBEZTP_CHARACTER_HPP

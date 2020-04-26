@@ -1,20 +1,20 @@
 #pragma once
 
-#ifndef EZTP_WEAPONS_HPP
-#define EZTP_WEAPONS_HPP
+#ifndef LIBEZTP_WEAPONS_HPP
+#define LIBEZTP_WEAPONS_HPP
 
-#include "dice.hpp"
+#include "libeztp/dice.hpp"
 #include <string>
 #include <map>
 #include <iostream>
 #include <fstream>
 
-namespace eztp::character {
+namespace eztp {
     class weapons {
     public:
         struct Weapons {
             std::string name;
-            core::dice die;
+            dice die;
             short numberDice;
             short ability; ///1 = Strength, 2 = Dexterity, 3 = Finesse
             short damageType; ///0 = None, 1 = Acid, 2 = Bludgeoning, 3 = Cold, 4 = Fire, 5 = Force, 6 = Lightning, 7 = Necrotic, 8 = Piercing, 9 = Poison, 10 = Psychic, 11 = Radiant, 12 = Slashing, 13 = Thunder
@@ -40,4 +40,4 @@ namespace eztp::character {
     };
 }
 
-#endif //EZTP_WEAPONS_HPP
+#endif //LIBEZTP_WEAPONS_HPP
