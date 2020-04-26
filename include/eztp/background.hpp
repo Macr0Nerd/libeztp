@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTPLIB_BACKGROUND_HPP
-#define EZTPLIB_BACKGROUND_HPP
+#ifndef EZTP_BACKGROUND_HPP
+#define EZTP_BACKGROUND_HPP
 
 #include <string>
 #include <map>
@@ -38,4 +38,4 @@ namespace eztp::character {
 }
 
 
-#endif //EZTPLIB_BACKGROUND_HPP
+#endif //EZTP_BACKGROUND_HPP

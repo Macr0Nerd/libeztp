@@ -15,7 +15,7 @@ include_directories(${SRC_DIR})
 
 #Main library files
 set(SRC_FILES
-	${SRC_DIR}/eztp.hpp
+	${SRC_DIR}/eztp.hpp ${SRC_DIR}/eztp.cpp
         ${SRC_DIR}/eztp/dice.hpp ${SRC_DIR}/eztp/dice.cpp
         ${SRC_DIR}/eztp/weapons.hpp ${SRC_DIR}/eztp/weapons.cpp
         ${SRC_DIR}/eztp/armor.hpp ${SRC_DIR}/eztp/armor.cpp

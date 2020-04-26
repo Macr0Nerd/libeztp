@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTPLIB_CHARACTER_HPP
-#define EZTPLIB_CHARACTER_HPP
+#ifndef EZTP_CHARACTER_HPP
+#define EZTP_CHARACTER_HPP
 
 #include "dice.hpp"
 #include "armor.hpp"
@@ -147,4 +147,4 @@ namespace eztp::character {
 }
 
 
-#endif //EZTPLIB_CHARACTER_HPP
+#endif //EZTP_CHARACTER_HPP

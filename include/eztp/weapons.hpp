@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTPLIB_WEAPONS_HPP
-#define EZTPLIB_WEAPONS_HPP
+#ifndef EZTP_WEAPONS_HPP
+#define EZTP_WEAPONS_HPP
 
 #include "dice.hpp"
 #include <string>
@@ -40,4 +40,4 @@ namespace eztp::character {
     };
 }
 
-#endif //EZTPLIB_WEAPONS_HPP
+#endif //EZTP_WEAPONS_HPP

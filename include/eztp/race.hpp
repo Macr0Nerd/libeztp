@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTPLIB_RACE_HPP
-#define EZTPLIB_RACE_HPP
+#ifndef EZTP_RACE_HPP
+#define EZTP_RACE_HPP
 
 #include <string>
 #include <map>
@@ -43,4 +43,4 @@ namespace eztp::character {
 }
 
 
-#endif //EZTPLIB_RACE_HPP
+#endif //EZTP_RACE_HPP

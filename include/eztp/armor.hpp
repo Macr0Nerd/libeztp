@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef EZTPLIB_ARMOR_HPP
-#define EZTPLIB_ARMOR_HPP
+#ifndef EZTP_ARMOR_HPP
+#define EZTP_ARMOR_HPP
 
 #include <iostream>
 #include <fstream>
@@ -40,4 +40,4 @@ namespace eztp::character {
     };
 }
 
-#endif //EZTPLIB_ARMOR_HPP
+#endif //EZTP_ARMOR_HPP
