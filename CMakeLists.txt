@@ -16,7 +16,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #########################################
 
 add_library(libeztp SHARED src/libeztp.cpp)
-add_library(EZTP::LibEZTP ALIAS libeztp)
+add_library(LibEZTP::libeztp ALIAS libeztp)
 
 #Adding the Headers in
 target_include_directories(libeztp
@@ -38,6 +38,62 @@ target_sources(libeztp
 
 #It's called "libeztp" I don't need CMake putting out "liblibeztp.so"
 SET_TARGET_PROPERTIES(libeztp PROPERTIES PREFIX "")
+
+
+##########################
+# Installing the library #
+##########################
+
+include(GNUInstallDirs)
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/LibEZTP)
+
+install(TARGETS libeztp
+        EXPORT libeztp-targets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        )
+
+set_target_properties(libeztp PROPERTIES EXPORT_NAME LibEZTP)
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(EXPORT libeztp-targets
+        FILE
+            LibEZTPTargets.cmake
+        NAMESPACE
+            LibEZTP::
+        DESTINATION
+            ${INSTALL_CONFIGDIR}
+        )
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+)
+
+configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/LibEZTPConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfig.cmake
+        INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
+        )
+
+install(FILES
+        ${CMAKE_CURRENT_LIST_DIR}/cmake/FindLibEZTP.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfigVersion.cmake
+        DESTINATION ${INSTALL_CONFIGDIR}
+        )
+
+configure_file(${CMAKE_CURRENT_LIST_DIR}/cmake/FindLibEZTP.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/FindLibEZTP.cmake
+        COPYONLY)
+
+export(EXPORT libeztp-targets
+        FILE ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPTargets.cmake
+        NAMESPACE LibEZTP::)
+
+export(PACKAGE LibEZTP)
 
 
 #######################################
