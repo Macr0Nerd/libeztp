@@ -49,7 +49,7 @@ set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/LibEZTP)
 
 install(TARGETS libeztp
         EXPORT libeztp-targets
-        LIBRARY DESTINATION lib64
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         )
 
 include(CMakePackageConfigHelpers)
@@ -60,20 +60,20 @@ write_basic_package_version_file(
 )
 
 set_target_properties(libeztp PROPERTIES EXPORT_NAME LibEZTP)
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(EXPORT libeztp-targets
         FILE
             LibEZTPConfig.cmake
         NAMESPACE
             LibEZTP::
-        DESTINATION lib64/cmake/LibEZTP
+        DESTINATION ${INSTALL_CONFIGDIR}
         )
 
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfig.cmake
         ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfigVersion.cmake
-        DESTINATION lib64/cmake/LibEZTP
+        DESTINATION ${INSTALL_CONFIGDIR}
         )
 
 export(
