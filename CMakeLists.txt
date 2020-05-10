@@ -28,12 +28,12 @@ target_include_directories(libeztp
 #Adding in the source files
 target_sources(libeztp
         PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/armor.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/background.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/character.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dice.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/race.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/weapons.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/armor.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/background.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/character.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/dice.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/race.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/weapons.cpp
         )
 
 #It's called "libeztp" I don't need CMake putting out "liblibeztp.so"
@@ -91,4 +91,7 @@ export(PACKAGE LibEZTP)
 #######################################
 
 add_subdirectory(test)
-target_include_directories(test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/ext)
+target_include_directories(test
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/ext
+        )

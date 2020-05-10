@@ -15,4 +15,4 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "../include/libeztp/libeztp.hpp"
+#include "libeztp/libeztp.hpp"
