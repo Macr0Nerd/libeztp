@@ -4,10 +4,11 @@
 #define LIBEZTP_CHARACTER_HPP
 
 #include "dice.hpp"
-#include "libeztp/armor.hpp"
+#include "creature.hpp"
+#include "armor.hpp"
 #include "weapons.hpp"
 #include "race.hpp"
-#include "libeztp/background.hpp"
+#include "background.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -20,34 +21,8 @@
 #include <algorithm>
 
 namespace eztp {
-    class character {
+    class character : creature {
     public:
-        ///Used to keep track of characters; 0 is for placeholder, 1-1000 is for NPCs, 1001+ is for PCs
-        unsigned long uid = 0;
-
-        bool npc = false;
-
-        std::string cname, cclass, crace, cbg;
-        int clevel;
-        std::map<std::string, std::array<int, 2> > abilities;
-
-        int hp = 0;
-        int maxHP = 0;
-        int ac = abilities["DEX"][1] + 10;
-        int gp = 0;
-        unsigned int speed = 30;
-
-        std::vector<std::string> equipment = {"FISTS", "UNARMORED", "UNSHIELDED"}; ///Equipped items
-        std::vector<std::string> misc = {}; ///Other items
-        unsigned short proBonus = 2;
-        std::map<std::string, std::string> traits;
-        std::vector<std::string> proficiencies;
-        std::vector<std::string> languages = {"COMMON"};
-        std::vector<std::string> saves;
-        std::vector<std::string> conditions;
-
-        char size = 'M'; ///Sets the size
-
         character(const std::string &initname,
                   const std::string &initclass,
                   const std::string &initrace,
@@ -71,10 +46,6 @@ namespace eztp {
         character &operator=(const character &a);
 
         character &operator>>(const character &a);
-
-        void refreshMods();
-
-        void refreshAC();
 
         void addTrait(const std::string &name, const std::string &description);
 
@@ -113,6 +84,23 @@ namespace eztp {
         int load(const std::string &file);
 
     private:
+        unsigned long uid = 0;
+
+        bool npc = false;
+
+        std::string cclass, crace, cbg;
+        int clevel;
+        int gp = 0;
+
+        std::vector<std::string> equipment = {"FISTS", "UNARMORED", "UNSHIELDED"}; ///Equipped items
+        std::vector<std::string> misc = {}; ///Other items
+        unsigned short proBonus = 2;
+        std::map<std::string, std::string> traits;
+        std::vector<std::string> proficiencies;
+        std::vector<std::string> languages = {"COMMON"};
+        std::vector<std::string> saves;
+        std::vector<std::string> conditions;
+
         ///Mapping the skills to an ability
         std::map<std::string, std::string> skills = {
                 {"ATHLETICS",       "STR"},

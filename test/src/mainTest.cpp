@@ -313,7 +313,7 @@ TEST_CASE("Armor data is accessible", "[armor]") {
     }
 }
 
-TEST_CASE("Race data is accessible", "[races") {
+TEST_CASE("Race data is accessible", "[races]") {
     SECTION("Abilities/Boosts") {
         INFO("Abilities/Boosts Tests");
         std::cout << "Starting abilities/boosts Tests..." << std::endl;

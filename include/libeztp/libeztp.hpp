@@ -4,6 +4,7 @@
 #define LIBEZTP_HPP
 
 #include "dice.hpp"
+#include "creature.hpp"
 
 #include "armor.hpp"
 #include "weapons.hpp"

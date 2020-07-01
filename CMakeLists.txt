@@ -30,6 +30,7 @@ target_sources(libeztp
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/src/armor.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/src/background.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/creature.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/src/character.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/src/dice.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/src/race.cpp

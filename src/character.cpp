@@ -18,10 +18,10 @@
 #include "libeztp/character.hpp"
 
 eztp::character::character(const std::string &initname, const std::string &initclass,
-                                      const std::string &initrace,
-                                      const std::string &initbg, int level, int strength, int dexterity,
-                                      int constitution,
-                                      int intelligence, int wisdom, int charisma, bool isNPC, unsigned long id) {
+                           const std::string &initrace,
+                           const std::string &initbg, int level, int strength, int dexterity,
+                           int constitution,
+                           int intelligence, int wisdom, int charisma, bool isNPC, unsigned long id) {
     /**
      * Creates the character with basic attributes and stats in an easy constructor
      *
@@ -46,19 +46,12 @@ eztp::character::character(const std::string &initname, const std::string &initc
 
     uid = id;
 
-    cname = initname;
+    name = initname;
     crace = initrace;
     cclass = initclass;
     cbg = initbg;
     clevel = level;
     npc = isNPC;
-
-    abilities = {{"STR", {strength,     static_cast<int>((std::floor(strength / 2) - 5))}},
-                 {"DEX", {dexterity,    static_cast<int>((std::floor(dexterity / 2) - 5))}},
-                 {"CON", {constitution, static_cast<int>((std::floor(constitution / 2) - 5))}},
-                 {"INT", {intelligence, static_cast<int>((std::floor(intelligence / 2) - 5))}},
-                 {"WIS", {wisdom,       static_cast<int>((std::floor(wisdom / 2) - 5))}},
-                 {"CHA", {charisma,     static_cast<int>(std::floor(charisma / 2) - 5)}}};
 
     if (uid) {
         setRace(crace);
@@ -85,7 +78,7 @@ eztp::character &eztp::character::operator=(const character &a) {
 
     npc = a.npc;
 
-    cname = a.cname;
+    name = a.name;
     crace = a.crace;
     cclass = a.cclass;
     cbg = a.cbg;
@@ -94,7 +87,6 @@ eztp::character &eztp::character::operator=(const character &a) {
     abilities = a.abilities;
 
     hp = a.hp;
-    maxHP = a.maxHP;
     ac = a.ac;
     gp = a.gp;
     speed = a.speed;
@@ -138,38 +130,6 @@ eztp::character &eztp::character::operator>>(const character &a) {
     return *this;
 }
 
-void eztp::character::refreshMods() {
-    /**
-     * Refresh the ability modifiers
-     */
-
-    for (std::pair<std::string, std::array<int, 2> > element : abilities) {
-        abilities[element.first][1] = static_cast<int>((std::floor(element.second[0] / 2) - 5));
-    }
-}
-
-void eztp::character::refreshAC() {
-    /**
-     * Refreshes the ac
-     *
-     * Required if a shield is added or removed
-     */
-
-    armor::Armor arm = armor::armors[equipment[1]];
-
-    ac = arm.baseAC;
-
-    if (abilities["DEX"][1] >= arm.dexMax) {
-        ac += arm.dexMax;
-    } else {
-        ac += abilities["DEX"][1];
-    }
-
-    if (std::count(equipment.begin(), equipment.end(), "SHIELD")) {
-        ac += 2;
-    }
-}
-
 void eztp::character::addTrait(const std::string &name, const std::string &description) {
     traits.emplace(name, description);
 }
@@ -207,8 +167,6 @@ void eztp::character::setWeapon(const std::string &inWeapon) {
 }
 
 void eztp::character::setArmor(const std::string &inArmor) {
-    refreshAC();
-
     equipment[1] = inArmor;
 }
 
@@ -244,11 +202,12 @@ int eztp::character::attack(bool mod) {
     weapons::Weapons weap = weapons::weaps[equipment[0]];
 
     int att = weap.ability;
-    int abi = (att == 1) ? abilities["DEX"][1] : (att == 2) ? abilities["STR"][1] : (att == 3) ? (abilities["DEX"][1] >=
-                                                                                                  abilities["STR"][1])
-                                                                                                 ? abilities["DEX"][1]
-                                                                                                 : abilities["STR"][1]
-                                                                                               : 0;
+    int abi = (att == 1) ? (abilities.at("DEX") / 2) + 1 : (att == 2) ? (abilities.at("STR") / 2) + 1 : (att == 3)
+                                                                                                        ? ((abilities.at("DEX")/2) + 1 >=
+                                                                                                           (abilities.at("STR")/2) + 1)
+                                                                                                          ? (abilities.at("DEX")/2) + 1
+                                                                                                          : (abilities.at("STR")/2) + 1
+                                                                                                        : 0;
 
     int dmg;
 
@@ -278,7 +237,7 @@ int eztp::character::rollSkill(const std::string &skill) {
      * @return The roll with skill & proficiency if applicable
      */
 
-    int x = abilities[skills[skill]][1];
+    int x = abilities.at(skills[skill]) / 2 + 1;
 
     if (std::count(proficiencies.begin(), proficiencies.end(), skill)) {
         x += proBonus;
@@ -293,16 +252,16 @@ int eztp::character::save(const std::string &file) {
 
     if (out.good()) {
         out << npc << '\n';
-        out << cname << '\n' << cclass << '\n' << crace << '\n' << cbg << '\n' << clevel << '\n';
+        out << name << '\n' << cclass << '\n' << crace << '\n' << cbg << '\n' << clevel << '\n';
 
-        out << abilities["STR"][0] << "," << abilities["STR"][1] << '\n';
-        out << abilities["DEX"][0] << "," << abilities["DEX"][1] << '\n';
-        out << abilities["CON"][0] << "," << abilities["CON"][1] << '\n';
-        out << abilities["WIS"][0] << "," << abilities["WIS"][1] << '\n';
-        out << abilities["INT"][0] << "," << abilities["INT"][1] << '\n';
-        out << abilities["CHA"][0] << "," << abilities["CHA"][1] << '\n';
+        out << abilities.at("STR") << '\n';
+        out << abilities.at("DEX") << '\n';
+        out << abilities.at("CON") << '\n';
+        out << abilities.at("WIS") << '\n';
+        out << abilities.at("INT") << '\n';
+        out << abilities.at("CHA") << '\n';
 
-        out << hp << "\n" << maxHP << "\n" << ac << "\n" << gp << "\n" << speed << "\n";
+        out << hp << "\n" << ac << "\n" << gp << "\n" << speed << "\n";
 
         if (!equipment.empty()) {
             for (int i = 0; i < equipment.size(); ++i) {
@@ -462,7 +421,7 @@ int eztp::character::load(const std::string &file) {
 
         getline(fin, tmp);
         std::stoi(tmp) >> npc;
-        getline(fin, cname);
+        getline(fin, name);
         getline(fin, cclass);
         getline(fin, crace);
         getline(fin, cbg);
@@ -472,15 +431,11 @@ int eztp::character::load(const std::string &file) {
         for (auto &i : abilities) {
             getline(fin, tmp);
             token = tmp.substr(0, tmp.find(delim));
-            abilities[i.first][0] = std::stoi(token);
-            tmp.erase(0, tmp.find(delim) + delim.length());
-            abilities[i.first][1] = std::stoi(tmp);
+            abilities.at(i.first) = std::stoi(token);
         }
 
         getline(fin, tmp);
         std::stoi(tmp) >> hp;
-        getline(fin, tmp);
-        std::stoi(tmp) >> maxHP;
         getline(fin, tmp);
         std::stoi(tmp) >> ac;
         getline(fin, tmp);
@@ -603,11 +558,9 @@ void eztp::character::setRace(const std::string &name) {
         if (x.abis[i] == "HP") {
             hp += x.boosts[i];
         } else {
-            abilities[x.abis[i]][0] += x.boosts[i];
+            abilities.at(x.abis[i]) += x.boosts[i];
         }
     }
-
-    refreshMods();
 
     size = x.size;
     speed = x.speed;
