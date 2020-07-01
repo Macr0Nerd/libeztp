@@ -63,10 +63,6 @@ bool eztp::character::operator==(const character &a) const {
     return uid == a.uid;
 }
 
-bool eztp::character::operator==(const character &a) {
-    return uid == a.uid;
-}
-
 eztp::character &eztp::character::operator=(const character &a) {
     /**
      * Overriding the assignment operator to copy characters completely
@@ -220,14 +216,6 @@ int eztp::character::attack(bool mod) {
     return dmg;
 }
 
-void eztp::character::damage(int dmg) {
-    hp -= dmg;
-}
-
-void eztp::character::heal(int heal) {
-    hp += heal;
-}
-
 int eztp::character::rollSkill(const std::string &skill) {
     /**
      * Returns a random dice roll for the provided skill
@@ -246,7 +234,7 @@ int eztp::character::rollSkill(const std::string &skill) {
     return d20.roll() + x;
 }
 
-int eztp::character::save(const std::string &file) {
+int eztp::character::save(const std::string &file) const {
     std::ofstream out;
     out.open(file);
 

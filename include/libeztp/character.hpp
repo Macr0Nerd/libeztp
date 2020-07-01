@@ -37,11 +37,9 @@ namespace eztp {
                   bool isNPC = false,
                   unsigned long id = 0);
 
-        ~character() = default;
+        ~character() override = default;
 
         bool operator==(const character &a) const;
-
-        bool operator==(const character &a);
 
         character &operator=(const character &a);
 
@@ -73,13 +71,9 @@ namespace eztp {
 
         int attack(bool mod = true);
 
-        void damage(int dmg);
-
-        void heal(int heal);
-
         int rollSkill(const std::string &skill);
 
-        int save(const std::string &file);
+        int save(const std::string &file) const;
 
         int load(const std::string &file);
 
