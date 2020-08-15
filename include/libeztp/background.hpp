@@ -10,9 +10,9 @@
 #include <iostream>
 
 namespace eztp {
-    class background {
+    class Background {
     public:
-        struct Background {
+        struct BackgroundStruct {
             std::string name;
             int gp;
 
@@ -20,20 +20,15 @@ namespace eztp {
             std::vector<std::string> equip;
         };
 
-        typedef std::map<std::string, Background> bmap;
-        static bmap bgs;
+        Background() = default;
 
-        background() = default;
+        ~Background() = default;
 
-        ~background() = default;
-
-        static void addBg(const std::string &name, Background &stats);
+        static void addBg(const std::string &name, BackgroundStruct &stats);
 
         static void delBg(const std::string &name);
 
-        static int save(const std::string &file);
-
-        static int load(const std::string &file);
+        static BackgroundStruct getBg(const std::string &name);
     };
 }
 

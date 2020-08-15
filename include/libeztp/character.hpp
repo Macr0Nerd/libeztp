@@ -43,7 +43,7 @@ namespace eztp {
 
         character &operator=(const character &a);
 
-        character &operator>>(const character &a);
+        void softCopy(const character &a);
 
         void addTrait(const std::string &name, const std::string &description);
 
@@ -73,10 +73,6 @@ namespace eztp {
 
         int rollSkill(const std::string &skill);
 
-        int save(const std::string &file) const;
-
-        int load(const std::string &file);
-
     private:
         unsigned long uid = 0;
 
@@ -96,7 +92,7 @@ namespace eztp {
         std::vector<std::string> conditions;
 
         ///Mapping the skills to an ability
-        std::map<std::string, std::string> skills = {
+        const std::map<std::string, std::string> skills = {
                 {"ATHLETICS",       "STR"},
                 {"ACROBATICS",      "DEX"},
                 {"SLEIGHT OF HAND", "DEX"},

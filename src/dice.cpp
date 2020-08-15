@@ -17,53 +17,38 @@
 
 #include "libeztp/dice.hpp"
 
-using namespace eztp;
+eztp::Die::Die(int sides) : nums(sides), seed(std::chrono::system_clock::now().time_since_epoch().count()),
+                            generator(seed), distribution(1, nums) {}
 
-dice::dice(int sides) {
-    nums = sides;
-}
-
-int dice::roll() const {
+int eztp::Die::roll() {
     if (nums > 0) {
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::default_random_engine generator(seed);
-
-        std::uniform_int_distribution<int> distribution(1, nums);
-
         return distribution(generator);
     } else {
         return nums;
     }
 }
 
-bool dice::operator==(const dice &a) const {
+bool eztp::Die::operator==(const Die &a) const {
     return nums == a.nums;
 }
 
-bool dice::operator!=(const dice &a) const {
+bool eztp::Die::operator!=(const Die &a) const {
     return nums != a.nums;
 }
 
-dice eztp::d0(0);
-dice eztp::d1(1);
-dice eztp::d2(2);
-dice eztp::d4(4);
-dice eztp::d6(6);
-dice eztp::d8(8);
-dice eztp::d10(10);
-dice eztp::d12(12);
-dice eztp::d20(20);
-dice eztp::d100(100);
+int eztp::Die::getSides() const {
+    return nums;
+}
 
-dmap dices = {
-        {0, eztp::d0},
-        {1, eztp::d1},
-        {2, eztp::d2},
-        {4, eztp::d4},
-        {6, eztp::d6},
-        {8, eztp::d8},
-        {10, eztp::d10},
-        {12, eztp::d12},
-        {20, eztp::d20},
-        {100, eztp::d100}
+std::map<int, eztp::Die> eztp::dice = {
+        {0,   eztp::Die(0)},
+        {1,   eztp::Die(1)},
+        {2,   eztp::Die(2)},
+        {4,   eztp::Die(4)},
+        {6,   eztp::Die(6)},
+        {8,   eztp::Die(8)},
+        {10,  eztp::Die(10)},
+        {12,  eztp::Die(12)},
+        {20,  eztp::Die(20)},
+        {100, eztp::Die(100)}
 };

@@ -3,18 +3,19 @@
 #ifndef LIBEZTP_WEAPONS_HPP
 #define LIBEZTP_WEAPONS_HPP
 
-#include "libeztp/dice.hpp"
+#include "dice.hpp"
 #include <string>
+#include <string_view>
 #include <map>
 #include <iostream>
 #include <fstream>
 
 namespace eztp {
-    class weapons {
+    class Weapons {
     public:
-        struct Weapons {
+        struct WeaponStruct {
             std::string name;
-            dice die;
+            Die die;
             short numberDice;
             short ability; ///1 = Strength, 2 = Dexterity, 3 = Finesse
             short damageType; ///0 = None, 1 = Acid, 2 = Bludgeoning, 3 = Cold, 4 = Fire, 5 = Force, 6 = Lightning, 7 = Necrotic, 8 = Piercing, 9 = Poison, 10 = Psychic, 11 = Radiant, 12 = Slashing, 13 = Thunder
@@ -23,20 +24,15 @@ namespace eztp {
             std::pair<int, int> range;
         };
 
-        typedef std::map<std::string, Weapons> wmap;
-        static wmap weaps;
+        Weapons() = default;
 
-        weapons() = default;
+        ~Weapons() = default;
 
-        ~weapons() = default;
-
-        static void addWeapon(const std::string &name, Weapons &stats);
+        static void addWeapon(const std::string &name, WeaponStruct &stats);
 
         static void delWeapon(const std::string &name);
 
-        static int save(const std::string &file);
-
-        static int load(const std::string &file);
+        static WeaponStruct getWeapon(const std::string &name);
     };
 }
 

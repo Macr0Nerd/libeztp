@@ -10,9 +10,9 @@
 #include <vector>
 
 namespace eztp {
-    class armor {
+    class Armor {
     public:
-        struct Armor {
+        struct ArmorStruct {
             std::string name;
             unsigned short baseAC; ///The base amount the armour protects with 0 dex
             unsigned short dexMax; ///The amount of allowed dex (0 = no dex, 10 = no limit)
@@ -23,20 +23,15 @@ namespace eztp {
             unsigned short strength; ///The minimum required strength
         };
 
-        typedef std::map<std::string, Armor> amap;
-        static amap armors;
+        Armor() = default;
 
-        armor() = default;
+        ~Armor() = default;
 
-        ~armor() = default;
-
-        static void addArmor(const std::string &name, Armor &stats);
+        static void addArmor(const std::string &name, ArmorStruct &stats);
 
         static void delArmor(const std::string &name);
 
-        static int save(const std::string &file);
-
-        static int load(const std::string &file);
+        static ArmorStruct getArmor(const std::string &name);
     };
 }
 

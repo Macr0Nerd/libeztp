@@ -10,9 +10,9 @@
 #include <fstream>
 
 namespace eztp {
-    class race {
+    class Race {
     public:
-        struct Race {
+        struct RaceStruct {
             std::string name;
             std::vector<std::string> abis; ///Abilities to improve
             std::vector<unsigned short> boosts; ///How much to improve them by
@@ -25,20 +25,15 @@ namespace eztp {
             std::vector<std::string> prof;
         };
 
-        typedef std::map<std::string, Race> rmap;
-        static rmap races;
+        Race() = default;
 
-        race() = default;
+        ~Race() = default;
 
-        ~race() = default;
-
-        static void addRace(const std::string &name, Race &stats);
+        static void addRace(const std::string &name, RaceStruct &stats);
 
         static void delRace(const std::string &name);
 
-        static int save(const std::string &file);
-
-        static int load(const std::string &file);
+        static RaceStruct getRace(const std::string &name);
     };
 }
 

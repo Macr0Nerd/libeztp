@@ -8,36 +8,31 @@
 #include <map>
 
 namespace eztp {
-    class dice {
+    class Die {
     public:
+        explicit Die(int sides = -1);
+
+        ~Die() = default;
+
+        [[nodiscard]] int roll();
+
+        Die &operator=(const Die &a) = default;
+
+        bool operator==(const Die &a) const;
+
+        bool operator!=(const Die &a) const;
+
+        int getSides() const;
+
+    private:
         int nums;
 
-        explicit dice(int sides = -1);
-
-        ~dice() = default;
-
-        [[nodiscard]] int roll() const;
-
-        dice &operator=(const dice &a) = default;
-
-        bool operator==(const dice &a) const;
-
-        bool operator!=(const dice &a) const;
+        unsigned seed;
+        std::default_random_engine generator;
+        std::uniform_int_distribution<int> distribution;
     };
 
-    extern dice d0;
-    extern dice d1;
-    extern dice d2;
-    extern dice d4;
-    extern dice d6;
-    extern dice d8;
-    extern dice d10;
-    extern dice d12;
-    extern dice d20;
-    extern dice d100;
-
-    typedef std::map<int, dice> dmap;
-    static dmap dices;
+    extern std::map<int, Die> dice;
 }
 
 #endif /* LIBEZTP_DICE_HPP */
