@@ -6,6 +6,7 @@
  * [Requirements](#requirements)
  * [Compiling](#compiling)
  * [Using](#using)
+ * [License](#license)
 
 ## FAQ
 #### What is LIBEZTP?
@@ -22,7 +23,8 @@ However, a lot of the code that is soon to come will be all fresh!
 
 ## Requirements
  * C++17 capable compiler (gcc, clang, msvc)
- * CMake 3.10 or above 
+ * CMake 3.10 or above
+ * [Nlohmann JSON](https://github.com/nlohmann/json) for serialization
 
 ## Compiling
  1. Clone the git repo
@@ -65,3 +67,25 @@ target_link_libraries(YourExecutable PRIVATE LibEZTP::LibEZTP)
 
 If you installed properly, it's as simple as that.
 Only two lines you need to add!
+
+## License
+Copyright (C) 2020  [Gabriele Alessandro Ron](https://macr0nerd.github.io)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+***
+
+This class contains the JSON Parser from Niels Lohmann which is licensed under the [MIT License](https://opensource.org/licenses/MIT). Copyright © 2013-2019 [Niels Lohmann](http://nlohmann.me/)
+
+This class contains the Catch2 Testing Library from Catch Org which is licensed under the [Boost License](https://opensource.org/licenses/BSL-1.0). Copyright © 2012-2020 [Catch Org](https://github.com/catchorg)
