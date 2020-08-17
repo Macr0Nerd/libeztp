@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-project(eztp VERSION 1.4.0 LANGUAGES CXX)
+project(eztp VERSION 1.0.0 LANGUAGES CXX)
 
 
 #######################################################
