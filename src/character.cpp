@@ -17,11 +17,11 @@
 
 #include "libeztp/character.hpp"
 
-eztp::character::character(const std::string &initname, const std::string &initclass,
+eztp::Character::Character(const std::string &initname, const std::string &initclass,
                            const std::string &initrace,
                            const std::string &initbg, int level, int strength, int dexterity,
                            int constitution,
-                           int intelligence, int wisdom, int charisma, bool isNPC, unsigned long id) {
+                           int intelligence, int wisdom, int charisma, bool isNPC, unsigned long id) : uid(id), crace(initrace), cclass(initclass), cbg(initbg), clevel(level), npc(isNPC) {
     /**
      * Creates the character with basic attributes and stats in an easy constructor
      *
@@ -44,14 +44,7 @@ eztp::character::character(const std::string &initname, const std::string &initc
      * @param isNPC Demarcates whether this is an NPC or PC
      */
 
-    uid = id;
-
     name = initname;
-    crace = initrace;
-    cclass = initclass;
-    cbg = initbg;
-    clevel = level;
-    npc = isNPC;
 
     if (uid) {
         setRace(crace);
@@ -59,11 +52,11 @@ eztp::character::character(const std::string &initname, const std::string &initc
     }
 }
 
-bool eztp::character::operator==(const character &a) const {
+bool eztp::Character::operator==(const Character &a) const {
     return uid == a.uid;
 }
 
-eztp::character &eztp::character::operator=(const character &a) {
+eztp::Character &eztp::Character::operator=(const Character &a) {
     /**
      * Overriding the assignment operator to copy characters completely
      *
@@ -107,7 +100,7 @@ eztp::character &eztp::character::operator=(const character &a) {
     return *this;
 }
 
-void eztp::character::softCopy(const character &a) {
+void eztp::Character::softCopy(const Character &a) {
     /**
      * Soft copies the character
      *
@@ -124,47 +117,47 @@ void eztp::character::softCopy(const character &a) {
     misc = a.misc;
 }
 
-void eztp::character::addTrait(const std::string &name, const std::string &description) {
+void eztp::Character::addTrait(const std::string &name, const std::string &description) {
     traits.emplace(name, description);
 }
 
-void eztp::character::delTrait(const std::string &name) {
+void eztp::Character::delTrait(const std::string &name) {
     traits.erase(name);
 }
 
-void eztp::character::addProf(const std::string &name) {
+void eztp::Character::addProf(const std::string &name) {
     proficiencies.push_back(name);
 }
 
-void eztp::character::delProf(const std::string &name) {
+void eztp::Character::delProf(const std::string &name) {
     proficiencies.erase(remove(proficiencies.begin(), proficiencies.end(), name), proficiencies.end());
 }
 
-void eztp::character::addItem(const std::string &name) {
+void eztp::Character::addItem(const std::string &name) {
     misc.push_back(name);
 }
 
-void eztp::character::delItem(const std::string &name) {
+void eztp::Character::delItem(const std::string &name) {
     misc.erase(remove(misc.begin(), misc.end(), name), misc.end());
 }
 
-void eztp::character::addCondition(const std::string &name) {
+void eztp::Character::addCondition(const std::string &name) {
     conditions.push_back(name);
 }
 
-void eztp::character::delCondition(const std::string &name) {
+void eztp::Character::delCondition(const std::string &name) {
     conditions.erase(remove(conditions.begin(), conditions.end(), name), conditions.end());
 }
 
-void eztp::character::setWeapon(const std::string &inWeapon) {
+void eztp::Character::setWeapon(const std::string &inWeapon) {
     equipment[0] = inWeapon;
 }
 
-void eztp::character::setArmor(const std::string &inArmor) {
+void eztp::Character::setArmor(const std::string &inArmor) {
     equipment[1] = inArmor;
 }
 
-std::string eztp::character::getWeapon() {
+std::string eztp::Character::getWeapon() {
     /**
      * Gets the weapon name
      *
@@ -174,7 +167,7 @@ std::string eztp::character::getWeapon() {
     return equipment[0];
 }
 
-std::string eztp::character::getArmor() {
+std::string eztp::Character::getArmor() {
     /**
      * Gets the armor name
      *
@@ -184,7 +177,7 @@ std::string eztp::character::getArmor() {
     return equipment[1];
 }
 
-int eztp::character::attack(bool mod) {
+int eztp::Character::attack(bool mod) {
     /**
      * Used to get the damage from a weapon attack
      *
@@ -214,7 +207,7 @@ int eztp::character::attack(bool mod) {
     return dmg;
 }
 
-int eztp::character::rollSkill(const std::string &skill) {
+int eztp::Character::rollSkill(const std::string &skill) {
     /**
      * Returns a random dice roll for the provided skill
      *
@@ -232,7 +225,7 @@ int eztp::character::rollSkill(const std::string &skill) {
     return dice.at(20).roll() + x;
 }
 
-void eztp::character::setRace(const std::string &name) {
+void eztp::Character::setRace(const std::string &name) {
     /**
      * Sets the race and abilities and stuff
      *
@@ -256,11 +249,54 @@ void eztp::character::setRace(const std::string &name) {
     proficiencies.insert(proficiencies.end(), x.prof.begin(), x.prof.end());
 }
 
-void eztp::character::setBG(const std::string &name) {
+void eztp::Character::setBG(const std::string &name) {
     Background::BackgroundStruct x = Background::getBg(name);
 
     gp = x.gp;
 
     proficiencies.insert(proficiencies.end(), x.prof.begin(), x.prof.end());
     misc.insert(misc.end(), x.equip.begin(), x.equip.end());
+}
+
+bool eztp::Character::save(const std::string &filename, const Character &ch) {
+    std::ofstream out(filename);
+
+    if (out.good()) {
+        try {
+            nlohmann::json js(ch);
+
+            out << js << std::endl;
+
+            out.close();
+
+            return true;
+        } catch (...) {
+            out.close();
+            return false;
+        }
+    } else {
+        out.close();
+        return false;
+    }
+}
+
+bool eztp::Character::load(const std::string &filename, Character &ch) {
+    std::ifstream in(filename);
+
+    if (in.good()) {
+        try {
+            nlohmann::json js, tmp;
+            in >> js;
+            ch = js.get<Character>();
+
+            in.close();
+            return true;
+        } catch (...) {
+            in.close();
+            return false;
+        }
+    } else {
+        in.close();
+        return false;
+    }
 }

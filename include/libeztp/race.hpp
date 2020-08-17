@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <nlohmann/json.hpp>
 
 namespace eztp {
     class Race {
@@ -33,8 +34,14 @@ namespace eztp {
 
         static void delRace(const std::string &name);
 
-        static RaceStruct getRace(const std::string &name);
+        [[nodiscard]] static RaceStruct getRace(const std::string &name);
+
+        [[nodiscard]] static bool save(const std::string &filename = "race.json");
+
+        [[nodiscard]] static bool load(const std::string &filename = "race.json");
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Race::RaceStruct, name, abis, boosts, size, speed, traits, prof)
 }
 
 

@@ -8,6 +8,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <nlohmann/json.hpp>
 
 namespace eztp {
     class Armor {
@@ -31,8 +32,14 @@ namespace eztp {
 
         static void delArmor(const std::string &name);
 
-        static ArmorStruct getArmor(const std::string &name);
+        [[nodiscard]] static ArmorStruct getArmor(const std::string &name);
+
+        [[nodiscard]] static bool save(const std::string &filename = "armor.json");
+
+        [[nodiscard]] static bool load(const std::string &filename = "armor.json");
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Armor::ArmorStruct, name, baseAC, dexMax, armType, disadvantage, don, doff, strength)
 }
 
 #endif //LIBEZTP_ARMOR_HPP

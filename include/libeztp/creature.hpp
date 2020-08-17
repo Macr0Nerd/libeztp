@@ -8,9 +8,9 @@
 #include <array>
 
 namespace eztp {
-    class creature {
+    class Creature {
     public:
-        creature(std::string inName = "",
+        Creature(std::string inName = "",
                  short inAC = 0,
                  std::string inAlignment = "",
                  int inHP = 0, char inSize = 'M',
@@ -23,7 +23,7 @@ namespace eztp {
                  short wisdom = 10,
                  short charisma = 10);
 
-        virtual ~creature() = default;
+        virtual ~Creature() = default;
 
         //Getters and Setters for the class members
         std::string getName() const;

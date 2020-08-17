@@ -9,6 +9,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <nlohmann/json.hpp>
 
 namespace eztp {
     class Weapons {
@@ -32,8 +33,14 @@ namespace eztp {
 
         static void delWeapon(const std::string &name);
 
-        static WeaponStruct getWeapon(const std::string &name);
+        [[nodiscard]] static WeaponStruct getWeapon(const std::string &name);
+
+        [[nodiscard]] static bool save(const std::string &filename = "weapons.json");
+
+        [[nodiscard]] static bool load(const std::string &filename = "weapons.json");
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Weapons::WeaponStruct, name, die, numberDice, ability, damageType, martial, ranged, range)
 }
 
 #endif //LIBEZTP_WEAPONS_HPP

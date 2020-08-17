@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
 
 namespace eztp {
     class Background {
@@ -28,8 +29,14 @@ namespace eztp {
 
         static void delBg(const std::string &name);
 
-        static BackgroundStruct getBg(const std::string &name);
+        [[nodiscard]] static BackgroundStruct getBg(const std::string &name);
+
+        [[nodiscard]] static bool save(const std::string& filename = "background.json");
+
+        [[nodiscard]] static bool load(const std::string& filename = "background.json");
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Background::BackgroundStruct, name, gp, prof, equip)
 }
 
 

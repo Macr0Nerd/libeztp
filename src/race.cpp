@@ -122,3 +122,47 @@ void eztp::Race::delRace(const std::string &name) {
 eztp::Race::RaceStruct eztp::Race::getRace(const std::string &name) {
     return ::races.at(name);
 }
+
+bool eztp::Race::save(const std::string &filename) {
+    std::ofstream out(filename);
+
+    if (out.good()) {
+        try {
+            nlohmann::json js(::races);
+
+            out << js << std::endl;
+
+            out.close();
+
+            return true;
+        } catch (...) {
+            out.close();
+            return false;
+        }
+    } else {
+        out.close();
+        return false;
+    }
+}
+
+bool eztp::Race::load(const std::string &filename) {
+    std::ifstream in(filename);
+
+    if (in.good()) {
+        try {
+            nlohmann::json js, tmp;
+            in >> js;
+            ::races.clear();
+            ::races = js.get<std::map<std::string, RaceStruct>>();
+
+            in.close();
+            return true;
+        } catch (...) {
+            in.close();
+            return false;
+        }
+    } else {
+        in.close();
+        return false;
+    }
+}

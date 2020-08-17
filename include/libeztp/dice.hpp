@@ -6,6 +6,7 @@
 #include <chrono>
 #include <random>
 #include <map>
+#include <nlohmann/json.hpp>
 
 namespace eztp {
     class Die {
@@ -22,7 +23,9 @@ namespace eztp {
 
         bool operator!=(const Die &a) const;
 
-        int getSides() const;
+        [[nodiscard]] int getSides() const;
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Die, nums)
 
     private:
         int nums;

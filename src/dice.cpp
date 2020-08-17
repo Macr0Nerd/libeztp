@@ -22,7 +22,16 @@ eztp::Die::Die(int sides) : nums(sides), seed(std::chrono::system_clock::now().t
 
 int eztp::Die::roll() {
     if (nums > 0) {
-        return distribution(generator);
+        int rolled = distribution(generator);
+        if (rolled <= nums && rolled > 0) {
+            return rolled;
+        } else {
+            seed = std::chrono::system_clock::now().time_since_epoch().count();
+            generator = std::default_random_engine(seed);
+            distribution = std::uniform_int_distribution<int>(1, nums);
+
+            return distribution(generator);
+        }
     } else {
         return nums;
     }

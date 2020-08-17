@@ -35,3 +35,47 @@ void eztp::Background::delBg(const std::string &name) {
 eztp::Background::BackgroundStruct eztp::Background::getBg(const std::string &name) {
     return ::bgs.at(name);
 }
+
+bool eztp::Background::save(const std::string &filename) {
+    std::ofstream out(filename);
+
+    if (out.good()) {
+        try {
+            nlohmann::json js(::bgs);
+
+            out << js << std::endl;
+
+            out.close();
+
+            return true;
+        } catch (...) {
+            out.close();
+            return false;
+        }
+    } else {
+        out.close();
+        return false;
+    }
+}
+
+bool eztp::Background::load(const std::string &filename) {
+    std::ifstream in(filename);
+
+    if (in.good()) {
+        try {
+            nlohmann::json js, tmp;
+            in >> js;
+            ::bgs.clear();
+            ::bgs = js.get<std::map<std::string, BackgroundStruct>>();
+
+            in.close();
+            return true;
+        } catch (...) {
+            in.close();
+            return false;
+        }
+    } else {
+        in.close();
+        return false;
+    }
+}

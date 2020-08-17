@@ -15,8 +15,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # This is to create the libeztp library #
 #########################################
 
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
 add_library(libeztp SHARED src/libeztp.cpp)
 add_library(LibEZTP::libeztp ALIAS libeztp)
+
+target_link_libraries(libeztp PRIVATE nlohmann_json::nlohmann_json)
 
 #Adding the Headers in
 target_include_directories(libeztp

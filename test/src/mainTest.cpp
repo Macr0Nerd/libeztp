@@ -276,6 +276,28 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
 
         std::cout << "Passed range tests" << std::endl;
     }
+
+    SECTION("Saving") {
+        INFO("Save Tests");
+        std::cout << "Starting weapons/save Tests" << std::endl;
+
+        CHECK(eztp::Weapons::save());
+        CHECK(eztp::Weapons::save("testWeapons.json"));
+
+        std::cout << "Passed save tests" << std::endl;
+    }
+
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting weapons/load Tests" << std::endl;
+
+        CHECK(eztp::Weapons::load());
+        CHECK(eztp::Weapons::load("testWeapons.json"));
+
+        CHECK(eztp::Weapons::getWeapon("FISTS").die.roll() == 1);
+
+        std::cout << "Passed load tests" << std::endl;
+    }
 }
 
 TEST_CASE("Armor data is accessible", "[armor]") {
@@ -309,14 +331,34 @@ TEST_CASE("Armor data is accessible", "[armor]") {
         CHECK_FALSE(eztp::Armor::getArmor("BREASTPLATE").disadvantage);
         CHECK(eztp::Armor::getArmor("PLATE").disadvantage);
 
-        std::cout << "Passes stealth tests" << std::endl;
+        std::cout << "Passed stealth tests" << std::endl;
+    }
+
+    SECTION("Saving") {
+        INFO("Save Tests");
+        std::cout << "Starting armor/save Tests" << std::endl;
+
+        CHECK(eztp::Armor::save());
+        CHECK(eztp::Armor::save("testArmor.json"));
+
+        std::cout << "Passed save tests" << std::endl;
+    }
+
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting armor/load Tests" << std::endl;
+
+        CHECK(eztp::Armor::load());
+        CHECK(eztp::Armor::load("testArmor.json"));
+
+        std::cout << "Passed load tests" << std::endl;
     }
 }
 
 TEST_CASE("Race data is accessible", "[races]") {
     SECTION("Abilities/Boosts") {
         INFO("Abilities/Boosts Tests");
-        std::cout << "Starting abilities/boosts Tests..." << std::endl;
+        std::cout << "Starting race/abilities/boosts Tests..." << std::endl;
 
         CHECK(eztp::Race::getRace("HILL DWARF").abis[1] == "WIS");
         CHECK(eztp::Race::getRace("HILL DWARF").boosts[1] == 1);
@@ -332,7 +374,7 @@ TEST_CASE("Race data is accessible", "[races]") {
 
     SECTION("Size") {
         INFO("Size Tests");
-        std::cout << "Starting size Tests..." << std::endl;
+        std::cout << "Starting race/size Tests..." << std::endl;
 
         CHECK(eztp::Race::getRace("HALF-ORC").size == 'M');
         CHECK(eztp::Race::getRace("LIGHTFOOT HALFLING").size == 'S');
@@ -343,7 +385,7 @@ TEST_CASE("Race data is accessible", "[races]") {
 
     SECTION("Speed") {
         INFO("Speed Tests");
-        std::cout << "Starting speed Tests..." << std::endl;
+        std::cout << "Starting race/speed Tests..." << std::endl;
 
         CHECK(eztp::Race::getRace("HALF-ELF").speed == 30);
         CHECK(eztp::Race::getRace("HILL DWARF").speed == 25);
@@ -351,12 +393,32 @@ TEST_CASE("Race data is accessible", "[races]") {
 
         std::cout << "Passed speed tests" << std::endl;
     }
+
+    SECTION("Saving") {
+        INFO("Save Tests");
+        std::cout << "Starting race/save Tests" << std::endl;
+
+        CHECK(eztp::Race::save());
+        CHECK(eztp::Race::save("testRace.json"));
+
+        std::cout << "Passed save tests" << std::endl;
+    }
+
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting race/load Tests" << std::endl;
+
+        CHECK(eztp::Race::load());
+        CHECK(eztp::Race::load("testRace.json"));
+
+        std::cout << "Passed load tests" << std::endl;
+    }
 }
 
 TEST_CASE("Background data is accessible", "[background]") {
     SECTION("gp") {
         INFO("gp Tests");
-        std::cout << "Starting gp Tests..." << std::endl;
+        std::cout << "Starting background/gp Tests..." << std::endl;
 
         CHECK(eztp::Background::getBg("ACOLYTE").gp == 15);
 
@@ -365,7 +427,7 @@ TEST_CASE("Background data is accessible", "[background]") {
 
     SECTION("Proficiencies") {
         INFO("Proficiencies Tests");
-        std::cout << "Starting proficiencies Tests..." << std::endl;
+        std::cout << "Starting background/proficiencies Tests..." << std::endl;
 
         CHECK(eztp::Background::getBg("ACOLYTE").prof[1] == "RELIGION");
 
@@ -374,10 +436,54 @@ TEST_CASE("Background data is accessible", "[background]") {
 
     SECTION("Equipment") {
         INFO("Equipment Tests");
-        std::cout << "Starting equipment Tests..." << std::endl;
+        std::cout << "Starting background/equipment Tests..." << std::endl;
 
         CHECK(eztp::Background::getBg("ACOLYTE").equip[0] == "Holy Symbol");
 
         std::cout << "Passed equipment tests" << std::endl;
+    }
+
+    SECTION("Saving") {
+        INFO("Save Tests");
+        std::cout << "Starting background/save Tests" << std::endl;
+
+        CHECK(eztp::Background::save());
+        CHECK(eztp::Background::save("testBackground.json"));
+
+        std::cout << "Passed save tests" << std::endl;
+    }
+
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting background/load Tests" << std::endl;
+
+        CHECK(eztp::Background::load());
+        CHECK(eztp::Background::load("testBackground.json"));
+
+        std::cout << "Passed load tests" << std::endl;
+    }
+}
+
+TEST_CASE("Character data is accessible", "[character]") {
+    SECTION("Saving") {
+        INFO("Save Tests");
+        std::cout << "Starting character/save Tests" << std::endl;
+
+        eztp::Character jimmy("Jimmy", "PALADIN", "DRAGONBORN", "ACOLYTE");
+
+        CHECK(eztp::Character::save("jimmy.json", jimmy));
+
+        std::cout << "Passed save tests" << std::endl;
+    }
+
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting character/load Tests" << std::endl;
+
+        eztp::Character tommy;
+
+        CHECK(eztp::Character::load("jimmy.json", tommy));
+
+        std::cout << "Passed load tests" << std::endl;
     }
 }

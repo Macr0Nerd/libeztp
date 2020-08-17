@@ -83,3 +83,47 @@ void eztp::Weapons::delWeapon(const std::string &name) {
 eztp::Weapons::WeaponStruct eztp::Weapons::getWeapon(const std::string &name) {
     return ::weaps.at(name);
 }
+
+bool eztp::Weapons::save(const std::string &filename) {
+    std::ofstream out(filename);
+
+    if (out.good()) {
+        try {
+            nlohmann::json js(::weaps);
+
+            out << js << std::endl;
+
+            out.close();
+
+            return true;
+        } catch (...) {
+            out.close();
+            return false;
+        }
+    } else {
+        out.close();
+        return false;
+    }
+}
+
+bool eztp::Weapons::load(const std::string &filename) {
+    std::ifstream in(filename);
+
+    if (in.good()) {
+        try {
+            nlohmann::json js, tmp;
+            in >> js;
+            ::weaps.clear();
+            ::weaps = js.get<std::map<std::string, WeaponStruct>>();
+
+            in.close();
+            return true;
+        } catch (...) {
+            in.close();
+            return false;
+        }
+    } else {
+        in.close();
+        return false;
+    }
+}

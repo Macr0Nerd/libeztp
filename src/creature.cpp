@@ -19,7 +19,7 @@
 
 using namespace eztp;
 
-creature::creature(std::string inName,
+Creature::Creature(std::string inName,
                    short inAC, std::string inAlignment,
                    int inHP,
                    char inSize,
@@ -45,82 +45,82 @@ creature::creature(std::string inName,
                  {"CHA", charisma}};
 }
 
-std::string creature::getName() const {
+std::string Creature::getName() const {
     return name;
 }
 
-void creature::setName(std::string &inName) {
+void Creature::setName(std::string &inName) {
     name = inName;
 }
 
-std::map<std::string, short> creature::getAbilities() const {
+std::map<std::string, short> Creature::getAbilities() const {
     return abilities;
 }
 
-void creature::setAbilities(std::map<std::string, short> &inAbilities) {
+void Creature::setAbilities(std::map<std::string, short> &inAbilities) {
     abilities = inAbilities;
 }
 
-int creature::getAbility(std::string &ability) const {
+int Creature::getAbility(std::string &ability) const {
     return abilities.at(ability);
 }
 
-void creature::setAbility(std::string &ability, short value) {
+void Creature::setAbility(std::string &ability, short value) {
     abilities[ability] = value;
 }
 
-short creature::getAC() const {
+short Creature::getAC() const {
     return ac;
 }
 
-void creature::setAC(short inAC) {
+void Creature::setAC(short inAC) {
     ac = inAC;
 }
 
-std::string creature::getAlignment() const {
+std::string Creature::getAlignment() const {
     return alignment;
 }
 
-void creature::setAlignment(std::string &inAlignment) {
+void Creature::setAlignment(std::string &inAlignment) {
     alignment = inAlignment;
 }
 
-int creature::getHP() const {
+int Creature::getHP() const {
     return hp;
 }
 
-void creature::setHP(int inHP) {
+void Creature::setHP(int inHP) {
     hp = inHP;
 }
 
-char creature::getSize() const {
+char Creature::getSize() const {
     return size;
 }
 
-void creature::setSize(char inSize) {
+void Creature::setSize(char inSize) {
     size = inSize;
 }
 
-unsigned int creature::getSpeed() const {
+unsigned int Creature::getSpeed() const {
     return speed;
 }
 
-void creature::setSpeed(unsigned int inSpeed) {
+void Creature::setSpeed(unsigned int inSpeed) {
     speed = inSpeed;
 }
 
-std::string creature::getType() const {
+std::string Creature::getType() const {
     return type;
 }
 
-void creature::setType(std::string &inType) {
+void Creature::setType(std::string &inType) {
     type = inType;
 }
 
-void creature::heal(int value) {
+void Creature::heal(int value) {
     hp += value;
 }
 
-void creature::damage(int value) {
+void Creature::damage(int value) {
     hp -= value;
 }

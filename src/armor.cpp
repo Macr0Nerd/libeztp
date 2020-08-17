@@ -46,3 +46,47 @@ void eztp::Armor::delArmor(const std::string &name) {
 eztp::Armor::ArmorStruct eztp::Armor::getArmor(const std::string &name) {
     return ::armors.at(name);
 }
+
+bool eztp::Armor::save(const std::string &filename) {
+    std::ofstream out(filename);
+
+    if (out.good()) {
+        try {
+            nlohmann::json js(::armors);
+
+            out << js << std::endl;
+
+            out.close();
+
+            return true;
+        } catch (...) {
+            out.close();
+            return false;
+        }
+    } else {
+        out.close();
+        return false;
+    }
+}
+
+bool eztp::Armor::load(const std::string &filename) {
+    std::ifstream in(filename);
+
+    if (in.good()) {
+        try {
+            nlohmann::json js, tmp;
+            in >> js;
+            ::armors.clear();
+            ::armors = js.get<std::map<std::string, ArmorStruct>>();
+
+            in.close();
+            return true;
+        } catch (...) {
+            in.close();
+            return false;
+        }
+    } else {
+        in.close();
+        return false;
+    }
+}

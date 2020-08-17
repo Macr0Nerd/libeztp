@@ -19,14 +19,15 @@
 #include <utility>
 #include <cmath>
 #include <algorithm>
+#include <nlohmann/json.hpp>
 
 namespace eztp {
-    class character : creature {
+    class Character : Creature {
     public:
-        character(const std::string &initname,
-                  const std::string &initclass,
-                  const std::string &initrace,
-                  const std::string &initbg,
+        Character(const std::string &initname = "",
+                  const std::string &initclass = "",
+                  const std::string &initrace = "",
+                  const std::string &initbg = "",
                   int level = 1,
                   int strength = 10,
                   int dexterity = 10,
@@ -37,13 +38,13 @@ namespace eztp {
                   bool isNPC = false,
                   unsigned long id = 0);
 
-        ~character() override = default;
+        ~Character() override = default;
 
-        bool operator==(const character &a) const;
+        bool operator==(const Character &a) const;
 
-        character &operator=(const character &a);
+        Character &operator=(const Character &a);
 
-        void softCopy(const character &a);
+        void softCopy(const Character &a);
 
         void addTrait(const std::string &name, const std::string &description);
 
@@ -72,6 +73,12 @@ namespace eztp {
         int attack(bool mod = true);
 
         int rollSkill(const std::string &skill);
+
+        [[nodiscard]] static bool save(const std::string &filename, const Character &ch);
+
+        [[nodiscard]] static bool load(const std::string &filename, Character &ch);
+
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Character, uid, name, abilities, ac, alignment, hp, speed, size, type, npc, cclass, crace, cbg, clevel, gp, equipment, misc, proBonus, traits, proficiencies, languages, saves, conditions, vulnerabilities, immunities, resistances)
 
     private:
         unsigned long uid = 0;
