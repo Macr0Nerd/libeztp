@@ -22,7 +22,7 @@
 #include <nlohmann/json.hpp>
 
 namespace eztp {
-    class Character : Creature {
+    class Character : public Creature {
     public:
         Character(const std::string &initname = "",
                   const std::string &initclass = "",
