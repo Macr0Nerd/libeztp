@@ -84,6 +84,10 @@ eztp::Weapons::WeaponStruct eztp::Weapons::getWeapon(const std::string &name) {
     return ::weaps.at(name);
 }
 
+std::map<std::string, eztp::Weapons::WeaponStruct> eztp::Weapons::getWeapons() {
+    return ::weaps;
+}
+
 bool eztp::Weapons::save(const std::string &filename) {
     std::ofstream out(filename);
 

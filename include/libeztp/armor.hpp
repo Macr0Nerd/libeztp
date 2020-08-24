@@ -34,6 +34,8 @@ namespace eztp {
 
         [[nodiscard]] static ArmorStruct getArmor(const std::string &name);
 
+        [[nodiscard]] static std::map<std::string, ArmorStruct> getArmors();
+
         [[nodiscard]] static bool save(const std::string &filename = "armor.json");
 
         [[nodiscard]] static bool load(const std::string &filename = "armor.json");

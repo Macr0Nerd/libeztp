@@ -123,6 +123,10 @@ eztp::Race::RaceStruct eztp::Race::getRace(const std::string &name) {
     return ::races.at(name);
 }
 
+std::map<std::string, eztp::Race::RaceStruct> eztp::Race::getRaces() {
+    return ::races;
+}
+
 bool eztp::Race::save(const std::string &filename) {
     std::ofstream out(filename);
 

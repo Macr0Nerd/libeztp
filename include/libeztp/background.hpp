@@ -31,6 +31,8 @@ namespace eztp {
 
         [[nodiscard]] static BackgroundStruct getBg(const std::string &name);
 
+        [[nodiscard]] static std::map<std::string, BackgroundStruct> getBgs();
+
         [[nodiscard]] static bool save(const std::string& filename = "background.json");
 
         [[nodiscard]] static bool load(const std::string& filename = "background.json");

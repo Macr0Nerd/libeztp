@@ -35,6 +35,8 @@ namespace eztp {
 
         [[nodiscard]] static WeaponStruct getWeapon(const std::string &name);
 
+        [[nodiscard]] static std::map<std::string, WeaponStruct> getWeapons();
+
         [[nodiscard]] static bool save(const std::string &filename = "weapons.json");
 
         [[nodiscard]] static bool load(const std::string &filename = "weapons.json");

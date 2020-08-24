@@ -36,6 +36,8 @@ namespace eztp {
 
         [[nodiscard]] static RaceStruct getRace(const std::string &name);
 
+        [[nodiscard]] static std::map<std::string, RaceStruct> getRaces();
+
         [[nodiscard]] static bool save(const std::string &filename = "race.json");
 
         [[nodiscard]] static bool load(const std::string &filename = "race.json");

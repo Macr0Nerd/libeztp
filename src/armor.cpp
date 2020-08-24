@@ -47,6 +47,10 @@ eztp::Armor::ArmorStruct eztp::Armor::getArmor(const std::string &name) {
     return ::armors.at(name);
 }
 
+std::map<std::string, eztp::Armor::ArmorStruct> eztp::Armor::getArmors() {
+    return ::armors;
+}
+
 bool eztp::Armor::save(const std::string &filename) {
     std::ofstream out(filename);
 

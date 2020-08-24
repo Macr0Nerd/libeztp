@@ -36,6 +36,10 @@ eztp::Background::BackgroundStruct eztp::Background::getBg(const std::string &na
     return ::bgs.at(name);
 }
 
+std::map<std::string, eztp::Background::BackgroundStruct> eztp::Background::getBgs() {
+    return ::bgs;
+}
+
 bool eztp::Background::save(const std::string &filename) {
     std::ofstream out(filename);
 
