@@ -74,6 +74,7 @@ namespace eztp {
         short ac;
         std::string alignment;
         int hp;
+        int maxHP;
         char size;
         unsigned int speed;
         std::string type;

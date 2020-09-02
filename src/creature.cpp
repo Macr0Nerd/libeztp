@@ -35,6 +35,7 @@ Creature::Creature(std::string inName,
           ac(inAC),
           alignment(inAlignment),
           hp(inHP),
+          maxHP(inHP),
           size(inSize),
           speed(inSpeed) {
     abilities = {{"STR", strength},
@@ -118,7 +119,8 @@ void Creature::setType(std::string &inType) {
 }
 
 void Creature::heal(int value) {
-    hp += value;
+    if(hp + value <= maxHP)
+        hp += value;
 }
 
 void Creature::damage(int value) {
