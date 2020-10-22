@@ -10,40 +10,33 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
-namespace eztp {
-    class Race {
-    public:
-        struct RaceStruct {
-            std::string name;
-            std::vector<std::string> abis; ///Abilities to improve
-            std::vector<unsigned short> boosts; ///How much to improve them by
+namespace eztp::Race {
+    struct RaceStruct {
+        std::string name;
+        std::vector<std::string> abis; ///Abilities to improve
+        std::vector<unsigned short> boosts; ///How much to improve them by
 
-            char size;
+        char size;
 
-            unsigned int speed;
+        unsigned int speed;
 
-            std::map<std::string, std::string> traits;
-            std::vector<std::string> prof;
-        };
+        std::map<std::string, std::string> traits;
+        std::vector<std::string> prof;
 
-        Race() = default;
-
-        ~Race() = default;
-
-        static void addRace(const std::string &name, RaceStruct &stats);
-
-        static void delRace(const std::string &name);
-
-        [[nodiscard]] static RaceStruct getRace(const std::string &name);
-
-        [[nodiscard]] static std::map<std::string, RaceStruct> getRaces();
-
-        [[nodiscard]] static bool save(const std::string &filename = "race.json");
-
-        [[nodiscard]] static bool load(const std::string &filename = "race.json");
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(RaceStruct, name, abis, boosts, size, speed, traits, prof)
     };
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Race::RaceStruct, name, abis, boosts, size, speed, traits, prof)
+    void addRace(const std::string &name, RaceStruct &stats);
+
+    void delRace(const std::string &name);
+
+    [[nodiscard]] RaceStruct getRace(const std::string &name);
+
+    [[nodiscard]] std::map<std::string, RaceStruct> getRaces();
+
+    [[nodiscard]] bool save(const std::string &filename = "race.json");
+
+    [[nodiscard]] bool load(const std::string &filename = "race.json");
 }
 
 
