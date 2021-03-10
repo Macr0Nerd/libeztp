@@ -14,11 +14,11 @@ set_target_properties(tests PROPERTIES
         CXX_EXTENSIONS OFF
 )
 
-target_link_libraries(tests PRIVATE LibEZTP::libeztp)
+target_link_libraries(tests PRIVATE LibEZTP::LibEZTP)
 target_link_libraries(tests PRIVATE Catch2::Catch2)
 target_link_libraries(tests PRIVATE nlohmann_json::nlohmann_json)
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/contrib)
 
-include(ParseAndAddCatchTests)
-ParseAndAddCatchTests(tests)
+include(Catch)
+catch_discover_tests(tests)

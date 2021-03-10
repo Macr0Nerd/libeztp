@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-project(eztp VERSION 1.1.0 LANGUAGES CXX)
+project(eztp VERSION 1.2.0 LANGUAGES CXX)
 
 
 option(BUILD_TESTING "This is to build the tests" ON)
@@ -24,7 +24,7 @@ if(NOT json_POPULATED)
 endif()
 
 add_library(libeztp SHARED src/libeztp.cpp)
-add_library(LibEZTP::libeztp ALIAS libeztp)
+add_library(LibEZTP::LibEZTP ALIAS libeztp)
 
 set_target_properties(libeztp PROPERTIES
         CXX_STANDARD 17

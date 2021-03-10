@@ -56,7 +56,7 @@ As this project (quite recently) is attempting to use modern C++, the only way t
 To use, install as shown above, and then add the following to your `CMakeLists.txt`
 
 ```cmake
-find_package(LibEZTP 1.0.0 REQUIRED)
+find_package(LibEZTP 1.2.0 REQUIRED)
 
 #All the fun stuff with your executable
 
