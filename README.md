@@ -23,7 +23,7 @@ However, a lot of the code that is soon to come will be all fresh!
 
 ## Requirements
  * C++17 capable compiler (gcc, clang, msvc)
- * CMake 3.10 or above
+ * CMake 3.14 or above
  * [Nlohmann JSON](https://github.com/nlohmann/json) for serialization
 
 ## Compiling
@@ -33,24 +33,22 @@ However, a lot of the code that is soon to come will be all fresh!
     ```bash
     mkdir build
     cd build
-    cmake ..
-    make
-    make install
+    cmake .. -DCMAKE_BUILD_TYPE=Release
+    cmake --build . --config Release
+    cmake --install .
     ```
     
     This will create a new directory called `build` that will hold all your build files.
     It will them use cmake to compile the files and create the library file.
     With this done, it will install the library files and headers into their respective spots.
     
- 3. If you wish to verify that the files worked, in build you may type
+ 3. If you wish to verify that the files worked, in `build` you may type
     
     ```bash
-    cd test
-    ./test
+    ctest --verbose -C Release
     ```
     
-    This will navigate into the directory that has test, and run the Catch2 tests.
-    It should very plainly tell you which tests succeeded and failed.
+    This will very plainly tell you which tests succeeded and failed.
     If any failed, please make an issue request on the GitHub.
 
 ## Using
@@ -69,7 +67,7 @@ If you installed properly, it's as simple as that.
 Only two lines you need to add!
 
 ## License
-Copyright (C) 2020  [Gabriele Alessandro Ron](https://macr0nerd.github.io)
+Copyright (C) 2021  [Gabriele Alessandro Ron](https://macr0nerd.github.io)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

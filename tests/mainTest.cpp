@@ -1,9 +1,9 @@
 #define CATCH_CONFIG_MAIN
 
 #include <iostream>
+#include <catch2/catch.hpp>
 
 #include "libeztp/libeztp.hpp"
-#include "Catch2/catch.hpp"
 
 TEST_CASE("Dice can roll within a range", "[dice]") {
     SECTION("Default Dice") {
@@ -34,7 +34,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d2 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d2 test " << i) {
+                DYNAMIC_SECTION("d2 tests " << i) {
                     INFO("d2 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(2).roll();
@@ -51,7 +51,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d4 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d4 test " << i) {
+                DYNAMIC_SECTION("d4 tests " << i) {
                     INFO("d4 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(4).roll();
@@ -68,7 +68,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d6 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d6 test " << i) {
+                DYNAMIC_SECTION("d6 tests " << i) {
                     INFO("d6 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(6).roll();
@@ -85,7 +85,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d8 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d8 test" << i) {
+                DYNAMIC_SECTION("d8 tests" << i) {
                     INFO("d8 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(8).roll();
@@ -102,7 +102,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d10 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d10 test" << i) {
+                DYNAMIC_SECTION("d10 tests" << i) {
                     INFO("d10 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(10).roll();
@@ -119,7 +119,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d12 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d12 test" << i) {
+                DYNAMIC_SECTION("d12 tests" << i) {
                     INFO("d12 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(12).roll();
@@ -136,7 +136,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d20 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d20 test" << i) {
+                DYNAMIC_SECTION("d20 tests" << i) {
                     INFO("d20 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(20).roll();
@@ -153,7 +153,7 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
             std::cout << "Starting d100 Tests..." << std::endl;
 
             for (int i = 0; i < 5; ++i) {
-                DYNAMIC_SECTION("d100 test" << i) {
+                DYNAMIC_SECTION("d100 tests" << i) {
                     INFO("d100 Test " + std::to_string(i) + " Start");
 
                     x = eztp::dice.at(100).roll();
