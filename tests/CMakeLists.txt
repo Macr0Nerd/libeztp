@@ -16,7 +16,6 @@ set_target_properties(tests PROPERTIES
 
 target_link_libraries(tests PRIVATE LibEZTP::LibEZTP)
 target_link_libraries(tests PRIVATE Catch2::Catch2)
-target_link_libraries(tests PRIVATE nlohmann_json::nlohmann_json)
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/contrib)
 
