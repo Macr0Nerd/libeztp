@@ -38,7 +38,7 @@ They will be automatically pulled using `FetchContent`, which does require an in
  2. In the cloned repo root directory, type
  
     ```bash
-    mkdir build
+    cmake -E make_directory build
     cd build
     cmake .. -DCMAKE_BUILD_TYPE=Release
     cmake --build . --config Release
