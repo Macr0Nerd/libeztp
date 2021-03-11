@@ -56,13 +56,9 @@ endif()
 include(GNUInstallDirs)
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/LibEZTP)
 
-install(TARGETS libeztp
+install(TARGETS libeztp nlohmann_json
         EXPORT libeztp-targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-install(TARGETS nlohmann_json
-        EXPORT libeztp-targets
 )
 
 include(CMakePackageConfigHelpers)
