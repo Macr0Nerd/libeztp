@@ -4,6 +4,7 @@
 ##### Jump To
  * [FAQ](#faq)
  * [Requirements](#requirements)
+ * [Depencies](#dependencies)
  * [Compiling](#compiling)
  * [Using](#using)
  * [License](#license)
@@ -24,7 +25,13 @@ However, a lot of the code that is soon to come will be all fresh!
 ## Requirements
  * C++17 capable compiler (gcc, clang, msvc)
  * CMake 3.14 or above
- * [Nlohmann JSON](https://github.com/nlohmann/json) for serialization
+
+## Dependencies
+The dependencies are not required to install.
+They will be automatically pulled using `FetchContent`, which does require an internet connection to pull.
+
+ * [Nlohmann_json](https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent)
+ * [Catch2](https://github.com/catchorg/Catch2)
 
 ## Compiling
  1. Clone the git repo
@@ -42,7 +49,7 @@ However, a lot of the code that is soon to come will be all fresh!
     It will them use cmake to compile the files and create the library file.
     With this done, it will install the library files and headers into their respective spots.
     
- 3. If you wish to verify that the files worked, in `build` you may type
+ 3. If you wish to verify that the files worked, in `build` you may run
     
     ```bash
     ctest --verbose -C Release
@@ -52,19 +59,39 @@ However, a lot of the code that is soon to come will be all fresh!
     If any failed, please make an issue request on the GitHub.
 
 ## Using
-As this project (quite recently) is attempting to use modern C++, the only way to use this project aside from moving all source files into your project is with `find_package` on CMake.
-To use, install as shown above, and then add the following to your `CMakeLists.txt`
+This project provides two ways to easily use this library.
+These are to use `find_package` or `FetchContent`.
+
+### `find_package()`
+To use `find_package`, all you need to do is to install as described in [compiling](#compiling)!
+Then, simply add the following line to your `CMakeLists.txt` and it'll be added to your project without a hitch.
 
 ```cmake
-find_package(LibEZTP 1.2.0 REQUIRED)
+find_package(LibEZTP 1.2.1 REQUIRED)
 
 #All the fun stuff with your executable
 
 target_link_libraries(YourExecutable PRIVATE LibEZTP::LibEZTP)
 ```
 
-If you installed properly, it's as simple as that.
-Only two lines you need to add!
+### `FetchContent`
+Another, possibly easier, way to add LibEZTP to your project is to use `FetchContent`.
+This eliminates the need to install the project, and can be done on the fly.
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(
+        eztp
+        GIT_REPOSITORY https://github.com/Macr0Nerd/libeztp.git
+        GIT_TAG v1.2.1
+)
+
+FetchContent_MakeAvailable(eztp)
+
+#All the fun stuff with your executable
+
+target_link_libraries(YourExecutable PRIVATE LibEZTP::LibEZTP)
+```
 
 ## License
 Copyright (C) 2021  [Gabriele Alessandro Ron](https://macr0nerd.github.io)

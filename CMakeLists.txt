@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-project(eztp VERSION 1.2.0 LANGUAGES CXX)
-
-
-option(BUILD_TESTING "This is to build the tests" ON)
+project(eztp VERSION 1.2.1 LANGUAGES CXX)
 
 
 #########################################
@@ -10,7 +7,18 @@ option(BUILD_TESTING "This is to build the tests" ON)
 #########################################
 
 include(FetchContent)
-set(FETCHCONTENT_BASE_DIR ~/.cache/ CACHE PATH "" FORCE)
+
+if(UNIX AND NOT APPLE)
+    set(FETCHCONTENT_BASE_DIR $ENV{HOME}/.cache/ CACHE PATH "" FORCE)
+endif()
+
+if(WIN32)
+    set(FETCHCONTENT_BASE_DIR "C:\\Users\\$ENV{USERNAME}\\AppData\\Local\\Temp")
+endif()
+
+if(APPLE)
+    set(FETCHCONTENT_BASE_DIR $ENV{HOME}/Library/Caches CACHE PATH "" FORCE)
+endif()
 
 FetchContent_Declare(
         json
