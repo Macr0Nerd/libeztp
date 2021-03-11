@@ -10,10 +10,11 @@ option(BUILD_TESTING "This is to build the tests" ON)
 #########################################
 
 include(FetchContent)
+set(FETCHCONTENT_BASE_DIR ~/.cache/ CACHE PATH "" FORCE)
 
 FetchContent_Declare(
         json
-        GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent.git
+        GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
         GIT_TAG v3.9.1
 )
 
@@ -60,6 +61,10 @@ install(TARGETS libeztp
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
+install(TARGETS nlohmann_json
+        EXPORT libeztp-targets
+)
+
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
         ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfigVersion.cmake
@@ -87,7 +92,7 @@ install(FILES
 export(
         EXPORT libeztp-targets
         NAMESPACE LibEZTP::
-        FILE ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPConfig.cmake
+        FILE ${CMAKE_CURRENT_BINARY_DIR}/LibEZTPTargets.cmake
 )
 
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
