@@ -14,6 +14,8 @@ endif()
 
 if(WIN32)
     set(FETCHCONTENT_BASE_DIR "C:/Users/$ENV{USERNAME}/AppData/Local/Temp")
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set(BUILD_SHARED_LIBS TRUE)
 endif()
 
 if(APPLE)
