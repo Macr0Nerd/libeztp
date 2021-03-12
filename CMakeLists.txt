@@ -13,7 +13,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(WIN32)
-    set(FETCHCONTENT_BASE_DIR "C:\\Users\\$ENV{USERNAME}\\AppData\\Local\\Temp")
+    set(FETCHCONTENT_BASE_DIR "C:/Users/$ENV{USERNAME}/AppData/Local/Temp")
 endif()
 
 if(APPLE)
