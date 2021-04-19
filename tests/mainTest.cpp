@@ -217,39 +217,39 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
     }
 }
 
+//TODO Find reason weapons data isn't accessible
 TEST_CASE("Weapons data is accessible", "[weapons]") {
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting weapons/load Tests" << std::endl;
+
+        CHECK(eztp::Weapons::load());
+
+        std::cout << "Passed load tests" << std::endl;
+    }
+
     SECTION("Dice check") {
         INFO("Dice tests starting");
         std::cout << "Starting weapons/dice Tests..." << std::endl;
 
-        CHECK(eztp::Weapons::getWeapon("DAGGER").die == eztp::dice.at(4));
-        CHECK(eztp::Weapons::getWeapon("SHORTBOW").die == eztp::dice.at(6));
-        CHECK(eztp::Weapons::getWeapon("LONGSWORD+").die == eztp::dice.at(10));
-        CHECK(eztp::Weapons::getWeapon("LONGBOW").die == eztp::dice.at(8));
+        eztp::Weapons::load();
+
+        CHECK(eztp::Weapons::getWeapon("Dagger").die == eztp::dice.at(4));
+        CHECK(eztp::Weapons::getWeapon("Shortbow").die == eztp::dice.at(6));
+        CHECK(eztp::Weapons::getWeapon("Longsword+").die == eztp::dice.at(10));
+        CHECK(eztp::Weapons::getWeapon("Longbow").die == eztp::dice.at(8));
 
         std::cout << "Passed dice tests" << std::endl;
-    }
-
-    SECTION("Ability check") {
-        INFO("Ability tests starting");
-        std::cout << "Starting weapons/ability Tests..." << std::endl;
-
-        CHECK(eztp::Weapons::getWeapon("DAGGER").ability == 3);
-        CHECK(eztp::Weapons::getWeapon("SHORTBOW").ability == 2);
-        CHECK(eztp::Weapons::getWeapon("LONGSWORD+").ability == 1);
-        CHECK(eztp::Weapons::getWeapon("LONGBOW").ability == 2);
-
-        std::cout << "Passed ability tests" << std::endl;
     }
 
     SECTION("Martial Check") {
         INFO("Martial tests starting");
         std::cout << "Starting weapons/martial Tests..." << std::endl;
 
-        CHECK_FALSE(eztp::Weapons::getWeapon("DAGGER").martial);
-        CHECK_FALSE(eztp::Weapons::getWeapon("SHORTBOW").martial);
-        CHECK(eztp::Weapons::getWeapon("LONGSWORD+").martial);
-        CHECK(eztp::Weapons::getWeapon("LONGBOW").martial);
+        CHECK(eztp::Weapons::getWeapon("Dagger").weapType == "Simple Melee");
+        CHECK_FALSE(eztp::Weapons::getWeapon("Shortbow").weapType == "Simple Ranged");
+        CHECK(eztp::Weapons::getWeapon("Longsword+").weapType == "Martial Melee");
+        CHECK(eztp::Weapons::getWeapon("Longbow").weapType == "Martial Ranged");
 
         std::cout << "Passed martial tests" << std::endl;
     }
@@ -258,45 +258,16 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Range tests starting");
         std::cout << "Starting weapons/range Tests..." << std::endl;
 
-        CHECK(eztp::Weapons::getWeapon("DAGGER").ranged == 2);
-        CHECK(eztp::Weapons::getWeapon("DAGGER").range.first == 20);
-        CHECK(eztp::Weapons::getWeapon("DAGGER").range.second == 60);
+        CHECK(eztp::Weapons::getWeapon("Longsword+").range.first == 5);
+        CHECK(eztp::Weapons::getWeapon("Longsword+").range.second == 0);
 
-        CHECK(eztp::Weapons::getWeapon("SHORTBOW").ranged == 1);
-        CHECK(eztp::Weapons::getWeapon("SHORTBOW").range.first == 80);
-        CHECK(eztp::Weapons::getWeapon("SHORTBOW").range.second == 320);
+        CHECK(eztp::Weapons::getWeapon("Dagger*").range.first == 20);
+        CHECK(eztp::Weapons::getWeapon("Dagger*").range.second == 60);
 
-        CHECK(eztp::Weapons::getWeapon("GLAIVE").ranged == 4);
-        CHECK(eztp::Weapons::getWeapon("GLAIVE").range.first == 0);
-        CHECK(eztp::Weapons::getWeapon("GLAIVE").range.second == 0);
-
-        CHECK(eztp::Weapons::getWeapon("NET").ranged == 3);
-        CHECK(eztp::Weapons::getWeapon("NET").range.first == 5);
-        CHECK(eztp::Weapons::getWeapon("NET").range.second == 15);
+        CHECK(eztp::Weapons::getWeapon("Shortbow").range.first == 80);
+        CHECK(eztp::Weapons::getWeapon("Shortbow").range.second == 320);
 
         std::cout << "Passed range tests" << std::endl;
-    }
-
-    SECTION("Saving") {
-        INFO("Save Tests");
-        std::cout << "Starting weapons/save Tests" << std::endl;
-
-        CHECK(eztp::Weapons::save());
-        CHECK(eztp::Weapons::save("testWeapons.json"));
-
-        std::cout << "Passed save tests" << std::endl;
-    }
-
-    SECTION("Loading") {
-        INFO("Load Tests");
-        std::cout << "Starting weapons/load Tests" << std::endl;
-
-        CHECK(eztp::Weapons::load());
-        CHECK(eztp::Weapons::load("testWeapons.json"));
-
-        CHECK(eztp::Weapons::getWeapon("FISTS").die.roll() == 1);
-
-        std::cout << "Passed load tests" << std::endl;
     }
 }
 
@@ -459,30 +430,6 @@ TEST_CASE("Background data is accessible", "[background]") {
 
         CHECK(eztp::Background::load());
         CHECK(eztp::Background::load("testBackground.json"));
-
-        std::cout << "Passed load tests" << std::endl;
-    }
-}
-
-TEST_CASE("Character data is accessible", "[character]") {
-    SECTION("Saving") {
-        INFO("Save Tests");
-        std::cout << "Starting character/save Tests" << std::endl;
-
-        eztp::Character jimmy("Jimmy", "PALADIN", "DRAGONBORN", "ACOLYTE");
-
-        CHECK(eztp::Character::save("jimmy.json", jimmy));
-
-        std::cout << "Passed save tests" << std::endl;
-    }
-
-    SECTION("Loading") {
-        INFO("Load Tests");
-        std::cout << "Starting character/load Tests" << std::endl;
-
-        eztp::Character tommy;
-
-        CHECK(eztp::Character::load("jimmy.json", tommy));
 
         std::cout << "Passed load tests" << std::endl;
     }

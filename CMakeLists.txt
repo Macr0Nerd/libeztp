@@ -34,6 +34,8 @@ if(NOT json_POPULATED)
     add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
+option(PULL_DATA "Pull the API data from 5e API" OFF)
+
 add_library(libeztp SHARED src/libeztp.cpp)
 add_library(LibEZTP::LibEZTP ALIAS libeztp)
 
@@ -53,7 +55,12 @@ target_include_directories(libeztp
 
 target_link_libraries(libeztp PUBLIC nlohmann_json::nlohmann_json)
 
+target_compile_definitions(libeztp PUBLIC DATA_DIR="${CMAKE_SOURCE_DIR}/data/")
+
 add_subdirectory(src)
+
+add_executable(moola main.cpp)
+target_link_libraries(moola LibEZTP::LibEZTP)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
