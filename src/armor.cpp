@@ -18,21 +18,7 @@
 #include "libeztp/armor.hpp"
 
 namespace {
-    std::map<std::string, eztp::Armor::ArmorStruct> armors = {
-            {"UNARMORED",       {"UNARMORED",       10, 10, 'N', false, 0,  0, 0}},
-            {"PADDED",          {"PADDED",          11, 10, 'L', true,  1,  1, 0}},
-            {"LEATHER",         {"LEATHER",         11, 10, 'L', false, 1,  1, 0}},
-            {"STUDDED LEATHER", {"STUDDED LEATHER", 12, 10, 'L', false, 1,  1, 0}},
-            {"HIDE",            {"HIDE",            12, 2,  'M', false, 5,  1, 0}},
-            {"CHAIN SHIRT",     {"CHAIN SHIRT",     13, 2,  'M', false, 5,  1, 0}},
-            {"SCALE MAIL",      {"SCALE MAIL",      14, 2,  'M', true,  5,  1, 0}},
-            {"BREASTPLATE",     {"BREASTPLATE",     14, 2,  'M', false, 5,  1, 0}},
-            {"HALF PLATE",      {"HALF PLATE",      15, 2,  'M', true,  5,  1, 0}},
-            {"RING MAIL",       {"RING MAIL",       14, 0,  'H', true,  10, 5, 0}},
-            {"CHAIN MAIL",      {"CHAIN MAIL",      16, 0,  'H', true,  10, 1, 13}},
-            {"SPLINT",          {"SPLINT",          17, 0,  'H', true,  10, 5, 15}},
-            {"PLATE",           {"PLATE",           18, 0,  'H', true,  10, 5, 15}}
-    };
+    std::map<std::string, eztp::Armor::ArmorStruct> armors;
 }
 
 void eztp::Armor::addArmor(const std::string &name, ArmorStruct &stats) {
@@ -51,46 +37,48 @@ std::map<std::string, eztp::Armor::ArmorStruct> eztp::Armor::getArmors() {
     return ::armors;
 }
 
-bool eztp::Armor::save(const std::string &filename) {
-    std::ofstream out(filename);
+bool eztp::Armor::load() {
+    std::string armorDir = std::string(DATA_DIR) + "equipment-categories/armor/";
+    std::string filename = armorDir + "armor.json";
 
-    if (out.good()) {
+    nlohmann::json json;
+    std::ifstream inf;
+
+    std::string n, cat;
+    int base, dex, str;
+    bool stealth;
+
+    for (const auto& entry : std::filesystem::directory_iterator(armorDir)) {
         try {
-            nlohmann::json js(::armors);
+            if (entry.path() != filename) {
+                inf.open(entry.path());
 
-            out << js << std::endl;
+                inf >> json;
 
-            out.close();
+                n = json["name"];
+                cat = json["armor_category"];
 
-            return true;
-        } catch (...) {
-            out.close();
-            return false;
+                base = json["armor_class"]["base"];
+                dex = json["armor_class"]["dex_bonus"].get<bool>() ? (json["armor_class"]["max_bonus"].is_null() ? 10 : json["armor_class"]["max_bonus"].get<int>()) : 0;
+
+                str = json["str_minimum"];
+
+                stealth = json["stealth_disadvantage"];
+
+                ::armors[json["index"]] = {n,
+                                           base,
+                                           dex,
+                                           cat,
+                                           stealth,
+                                           str};
+
+                inf.close();
+            }
+        } catch (std::exception& e) {
+            inf.close();
+            continue;
         }
-    } else {
-        out.close();
-        return false;
     }
-}
 
-bool eztp::Armor::load(const std::string &filename) {
-    std::ifstream in(filename);
-
-    if (in.good()) {
-        try {
-            nlohmann::json js, tmp;
-            in >> js;
-            ::armors.clear();
-            ::armors = js.get<std::map<std::string, ArmorStruct>>();
-
-            in.close();
-            return true;
-        } catch (...) {
-            in.close();
-            return false;
-        }
-    } else {
-        in.close();
-        return false;
-    }
+    return true;
 }
