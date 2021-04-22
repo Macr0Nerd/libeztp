@@ -37,7 +37,7 @@ endif()
 option(PULL_DATA "Pull the API data from 5e API" OFF)
 
 if(PULL_DATA)
-    find_package(Python QUIET)
+    find_package(Python REQUIRED)
 
     if(Python_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/data/apipull.py")
         execute_process(COMMAND ${PYTHON_EXECUTABLE} apipull.py
