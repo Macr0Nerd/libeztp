@@ -39,9 +39,12 @@ option(PULL_DATA "Pull the API data from 5e API" OFF)
 if(PULL_DATA)
     find_package(Python REQUIRED)
 
-    if(Python_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/data/apipull.py")
+    if(EXISTS "${CMAKE_SOURCE_DIR}/data/apipull.py")
+        message("-- Found API Script: ${CMAKE_SOURCE_DIR}/data/apipull.py")
         execute_process(COMMAND ${PYTHON_EXECUTABLE} apipull.py
                 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/)
+    else()
+        message(FATAL_ERROR "-- Cannot find script to pull API data!")
     endif()
 endif()
 
