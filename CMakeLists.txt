@@ -68,9 +68,6 @@ target_compile_definitions(libeztp PUBLIC DATA_DIR="${CMAKE_SOURCE_DIR}/data/")
 
 add_subdirectory(src)
 
-add_executable(moola main.cpp)
-target_link_libraries(moola LibEZTP::LibEZTP)
-
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
 endif()
