@@ -217,7 +217,6 @@ TEST_CASE("Dice can roll within a range", "[dice]") {
     }
 }
 
-//TODO Find reason weapons data isn't accessible
 TEST_CASE("Weapons data is accessible", "[weapons]") {
     SECTION("Loading") {
         INFO("Load Tests");
@@ -232,12 +231,10 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Dice tests starting");
         std::cout << "Starting weapons/dice Tests..." << std::endl;
 
-        eztp::Weapons::load();
-
-        CHECK(eztp::Weapons::getWeapon("Dagger").die == eztp::dice.at(4));
-        CHECK(eztp::Weapons::getWeapon("Shortbow").die == eztp::dice.at(6));
-        CHECK(eztp::Weapons::getWeapon("Longsword+").die == eztp::dice.at(10));
-        CHECK(eztp::Weapons::getWeapon("Longbow").die == eztp::dice.at(8));
+        CHECK(eztp::Weapons::getWeapon("dagger").die == eztp::dice.at(4));
+        CHECK(eztp::Weapons::getWeapon("shortbow").die == eztp::dice.at(6));
+        CHECK(eztp::Weapons::getWeapon("longsword+").die == eztp::dice.at(10));
+        CHECK(eztp::Weapons::getWeapon("longbow").die == eztp::dice.at(8));
 
         std::cout << "Passed dice tests" << std::endl;
     }
@@ -246,10 +243,10 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Martial tests starting");
         std::cout << "Starting weapons/martial Tests..." << std::endl;
 
-        CHECK(eztp::Weapons::getWeapon("Dagger").weapType == "Simple Melee");
-        CHECK_FALSE(eztp::Weapons::getWeapon("Shortbow").weapType == "Simple Ranged");
-        CHECK(eztp::Weapons::getWeapon("Longsword+").weapType == "Martial Melee");
-        CHECK(eztp::Weapons::getWeapon("Longbow").weapType == "Martial Ranged");
+        CHECK(eztp::Weapons::getWeapon("dagger").weapType == "Simple Melee");
+        CHECK(eztp::Weapons::getWeapon("shortbow").weapType == "Simple Ranged");
+        CHECK(eztp::Weapons::getWeapon("longsword+").weapType == "Martial Melee");
+        CHECK(eztp::Weapons::getWeapon("longbow").weapType == "Martial Ranged");
 
         std::cout << "Passed martial tests" << std::endl;
     }
@@ -258,27 +255,36 @@ TEST_CASE("Weapons data is accessible", "[weapons]") {
         INFO("Range tests starting");
         std::cout << "Starting weapons/range Tests..." << std::endl;
 
-        CHECK(eztp::Weapons::getWeapon("Longsword+").range.first == 5);
-        CHECK(eztp::Weapons::getWeapon("Longsword+").range.second == 0);
+        CHECK(eztp::Weapons::getWeapon("longsword+").range.first == 5);
+        CHECK(eztp::Weapons::getWeapon("longsword+").range.second == 0);
 
-        CHECK(eztp::Weapons::getWeapon("Dagger*").range.first == 20);
-        CHECK(eztp::Weapons::getWeapon("Dagger*").range.second == 60);
+        CHECK(eztp::Weapons::getWeapon("dagger*").range.first == 20);
+        CHECK(eztp::Weapons::getWeapon("dagger*").range.second == 60);
 
-        CHECK(eztp::Weapons::getWeapon("Shortbow").range.first == 80);
-        CHECK(eztp::Weapons::getWeapon("Shortbow").range.second == 320);
+        CHECK(eztp::Weapons::getWeapon("shortbow").range.first == 80);
+        CHECK(eztp::Weapons::getWeapon("shortbow").range.second == 320);
 
         std::cout << "Passed range tests" << std::endl;
     }
 }
 
 TEST_CASE("Armor data is accessible", "[armor]") {
+    SECTION("Loading") {
+        INFO("Load Tests");
+        std::cout << "Starting armor/load Tests" << std::endl;
+
+        CHECK(eztp::Armor::load());
+
+        std::cout << "Passed load tests" << std::endl;
+    }
+
     SECTION("Base AC") {
         INFO("Base AC Tests");
         std::cout << "Starting armor/ac Tests..." << std::endl;
 
-        CHECK(eztp::Armor::getArmor("LEATHER").baseAC == 11);
-        CHECK(eztp::Armor::getArmor("BREASTPLATE").baseAC == 14);
-        CHECK(eztp::Armor::getArmor("PLATE").baseAC == 18);
+        CHECK(eztp::Armor::getArmor("leather").baseAC == 11);
+        CHECK(eztp::Armor::getArmor("breastplate").baseAC == 14);
+        CHECK(eztp::Armor::getArmor("plate").baseAC == 18);
 
         std::cout << "Passed base AC" << std::endl;
     }
@@ -287,9 +293,9 @@ TEST_CASE("Armor data is accessible", "[armor]") {
         INFO("Armor Type Tests");
         std::cout << "Starting armor/type Tests..." << std::endl;
 
-        CHECK(eztp::Armor::getArmor("LEATHER").armType == 'L');
-        CHECK(eztp::Armor::getArmor("BREASTPLATE").armType == 'M');
-        CHECK(eztp::Armor::getArmor("PLATE").armType == 'H');
+        CHECK(eztp::Armor::getArmor("leather").armType == "Light");
+        CHECK(eztp::Armor::getArmor("breastplate").armType == "Medium");
+        CHECK(eztp::Armor::getArmor("plate").armType == "Heavy");
 
         std::cout << "Passed armor type" << std::endl;
     }
@@ -298,31 +304,11 @@ TEST_CASE("Armor data is accessible", "[armor]") {
         INFO("Stealth Tests");
         std::cout << "Starting armor/stealth Tests..." << std::endl;
 
-        CHECK_FALSE(eztp::Armor::getArmor("LEATHER").disadvantage);
-        CHECK_FALSE(eztp::Armor::getArmor("BREASTPLATE").disadvantage);
-        CHECK(eztp::Armor::getArmor("PLATE").disadvantage);
+        CHECK_FALSE(eztp::Armor::getArmor("leather").disadvantage);
+        CHECK_FALSE(eztp::Armor::getArmor("breastplate").disadvantage);
+        CHECK(eztp::Armor::getArmor("plate").disadvantage);
 
         std::cout << "Passed stealth tests" << std::endl;
-    }
-
-    SECTION("Saving") {
-        INFO("Save Tests");
-        std::cout << "Starting armor/save Tests" << std::endl;
-
-        CHECK(eztp::Armor::save());
-        CHECK(eztp::Armor::save("testArmor.json"));
-
-        std::cout << "Passed save tests" << std::endl;
-    }
-
-    SECTION("Loading") {
-        INFO("Load Tests");
-        std::cout << "Starting armor/load Tests" << std::endl;
-
-        CHECK(eztp::Armor::load());
-        CHECK(eztp::Armor::load("testArmor.json"));
-
-        std::cout << "Passed load tests" << std::endl;
     }
 }
 
