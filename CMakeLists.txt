@@ -36,6 +36,15 @@ endif()
 
 option(PULL_DATA "Pull the API data from 5e API" OFF)
 
+if(PULL_DATA)
+    find_package(PythonInterp QUIET)
+
+    if(PYTHON_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/data/apipull.py")
+        execute_process(COMMAND ${PYTHON_EXECUTABLE} apipull.py
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/)
+    endif()
+endif()
+
 add_library(libeztp SHARED src/libeztp.cpp)
 add_library(LibEZTP::LibEZTP ALIAS libeztp)
 
@@ -58,6 +67,9 @@ target_link_libraries(libeztp PUBLIC nlohmann_json::nlohmann_json)
 target_compile_definitions(libeztp PUBLIC DATA_DIR="${CMAKE_SOURCE_DIR}/data/")
 
 add_subdirectory(src)
+
+add_executable(moola main.cpp)
+target_link_libraries(moola LibEZTP::LibEZTP)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
