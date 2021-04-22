@@ -37,7 +37,10 @@ std::map<std::string, eztp::Weapons::WeaponStruct> eztp::Weapons::getWeapons() {
     return ::weaps;
 }
 
-bool eztp::Weapons::load(const std::string &filename) {
+bool eztp::Weapons::load() {
+    std::string weaponDir = std::string(DATA_DIR) + "equipment-categories/weapon/";
+    std::string filename = weaponDir + "weapon.json";
+
     nlohmann::json json;
     std::ifstream inf;
 
@@ -47,7 +50,7 @@ bool eztp::Weapons::load(const std::string &filename) {
     short num;
     Die ddie;
 
-    for (const auto& entry : std::filesystem::directory_iterator(std::string(DATA_DIR) + "equipment-categories/weapon/")) {
+    for (const auto& entry : std::filesystem::directory_iterator(weaponDir)) {
         tmp.clear();
 
         try {

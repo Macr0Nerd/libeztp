@@ -33,7 +33,7 @@ namespace eztp::Weapons {
 
     [[nodiscard]] std::map<std::string, WeaponStruct> getWeapons();
 
-    [[nodiscard]] bool load(const std::string &filename = std::string(DATA_DIR) + "equipment-categories/weapon/weapon.json");
+    [[nodiscard]] bool load();
 }
 
 #endif //LIBEZTP_WEAPONS_HPP
