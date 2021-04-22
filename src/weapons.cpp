@@ -47,7 +47,7 @@ bool eztp::Weapons::load() {
     std::string fn, dam, cat, abi;
     std::stringstream tmp;
     std::pair<int, int> ran;
-    short num;
+    int num;
     Die ddie;
 
     for (const auto& entry : std::filesystem::directory_iterator(weaponDir)) {

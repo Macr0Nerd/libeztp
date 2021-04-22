@@ -18,7 +18,7 @@ namespace eztp::Weapons {
     struct WeaponStruct {
         std::string name; /// If the name has a +, it is the versatile version. If it has a *, it is the thrown version.
         Die die;
-        short numberDice;
+        int numberDice;
         std::string damageType;
         std::string weapType;
         std::pair<int, int> range;
