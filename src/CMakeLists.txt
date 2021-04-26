@@ -6,4 +6,4 @@ target_sources(libeztp
         ${CMAKE_CURRENT_SOURCE_DIR}/dice.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/race.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/weapons.cpp
-)
+        )

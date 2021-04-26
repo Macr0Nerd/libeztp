@@ -12,7 +12,7 @@ set_target_properties(tests PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
-)
+        )
 
 target_link_libraries(tests PRIVATE LibEZTP::LibEZTP)
 target_link_libraries(tests PRIVATE Catch2::Catch2)
