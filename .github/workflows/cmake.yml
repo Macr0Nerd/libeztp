@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -30,7 +30,7 @@ jobs:
       # This installs our dependencies so it can automatically be built in testing
       # Normally the user would run Python to ensure the data exists
       run: |
-        python -m pip install --upgrade pip requests
+        python3 -m pip install --upgrade pip requests
 
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
