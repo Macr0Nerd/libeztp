@@ -46,6 +46,11 @@ if (PULL_DATA)
                 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/
                 RESULT_VARIABLE outt
                 )
+
+        if(NOT ${outt} EQUAL 0)
+            message(FATAL_ERROR "-- API Data script did not complete successfully!")
+        endif ()
+
         message("-- Script output: ${outt}")
         message("-- API Script Finished")
     else ()
@@ -60,6 +65,8 @@ if (PULL_DATA)
     if (NOT ${ecode} EQUAL 0)
         message(FATAL_ERROR "-- Cannot find Python module \"requests\". Please install the requirements.txt or set INSTALL_REQ to true.")
     endif ()
+
+    message("-- Found required Python modules")
 endif ()
 
 add_library(libeztp SHARED src/libeztp.cpp)
