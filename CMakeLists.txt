@@ -35,6 +35,7 @@ if(NOT json_POPULATED)
 endif()
 
 option(PULL_DATA "Pull the API data from 5e API" OFF)
+option(INSTALL_REQ "Install the Python requirements" OFF)
 
 if(PULL_DATA)
     find_package(Python REQUIRED)
@@ -48,6 +49,21 @@ if(PULL_DATA)
         message("-- API Script Finished")
     else()
         message(FATAL_ERROR "-- Cannot find script to pull API data!")
+    endif()
+
+    execute_process(
+            COMMAND pip show requests
+            RESULT_VARIABLE ecode
+            OUTPUT_QUIET)
+
+    if(NOT ${ecode} EQUAL 0)
+        message(FATAL_ERROR "-- Cannot find Python module \"requests\". Please install the requirements.txt or set INSTALL_REQ to true.")
+
+        if(INSTALL_REQ)
+            execute_process(
+                    COMMAND pip install requests
+                    RESULT_VARIABLE vulture)
+        endif()
     endif()
 endif()
 
