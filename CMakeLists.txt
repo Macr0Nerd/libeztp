@@ -41,7 +41,7 @@ if (PULL_DATA)
 
     if (EXISTS "${CMAKE_SOURCE_DIR}/data/apipull.py")
         message("-- Found API Script: ${CMAKE_SOURCE_DIR}/data/apipull.py")
-        execute_process(COMMAND ${Python_EXECUTABLE} apipull.py
+        execute_process(COMMAND python apipull.py
                 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/
                 RESULT_VARIABLE outt
                 )
