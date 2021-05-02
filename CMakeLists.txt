@@ -35,7 +35,6 @@ if (NOT json_POPULATED)
 endif ()
 
 option(PULL_DATA "Pull the API data from 5e API" OFF)
-option(INSTALL_REQ "Install the Python requirements" OFF)
 
 if (PULL_DATA)
     find_package(Python REQUIRED)
